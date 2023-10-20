@@ -20,7 +20,7 @@
 - name: auto_remove
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "echo"'
+    command: /bin/sh -c "echo"
     name: "{{ cname }}"
     state: started
     auto_remove: true
@@ -38,8 +38,8 @@
 
 - assert:
     that:
-    - auto_remove_1 is changed
-    - auto_remove_2 is not changed
+      - auto_remove_1 is changed
+      - auto_remove_2 is not changed
 
 ####################################################################
 ## blkio_weight ####################################################
@@ -48,7 +48,7 @@
 - name: blkio_weight
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     blkio_weight: 123
@@ -58,7 +58,7 @@
 - name: blkio_weight (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     blkio_weight: 123
@@ -68,7 +68,7 @@
 - name: blkio_weight (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     blkio_weight: 234
@@ -86,16 +86,17 @@
 - when: blkio_weight_1 is failed
   assert:
     that:
-    - "'setting cgroup config for procHooks process caused: failed to write' in blkio_weight_1.msg"
+      - "'setting cgroup config for procHooks process caused: failed to write' in blkio_weight_1.msg"
 
 - when: blkio_weight_1 is not failed
   assert:
     that:
-    - blkio_weight_1 is changed
-    - blkio_weight_2 is not failed
-    - "blkio_weight_2 is not changed or 'Docker warning: Your kernel does not support Block I/O weight or the cgroup is not mounted. Weight discarded.' in (blkio_weight_2.warnings | default([]))"
-    - blkio_weight_3 is not failed
-    - blkio_weight_3 is changed
+      - blkio_weight_1 is changed
+      - blkio_weight_2 is not failed
+      - "blkio_weight_2 is not changed or 'Docker warning: Your kernel does not support Block I/O weight or the cgroup is not mounted. Weight discarded.' in (blkio_weight_2.warnings
+        | default([]))"
+      - blkio_weight_3 is not failed
+      - blkio_weight_3 is changed
 
 ####################################################################
 ## cap_drop, capabilities ##########################################
@@ -104,48 +105,48 @@
 - name: capabilities, cap_drop
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     capabilities:
-    - sys_time
+      - sys_time
     cap_drop:
-    - all
+      - all
   register: capabilities_1
 
 - name: capabilities, cap_drop (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     capabilities:
-    - sys_time
+      - sys_time
     cap_drop:
-    - all
+      - all
   register: capabilities_2
 
 - name: capabilities, cap_drop (less)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     capabilities: []
     cap_drop:
-    - all
+      - all
   register: capabilities_3
 
 - name: capabilities, cap_drop (changed)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     capabilities:
-    - setgid
+      - setgid
     cap_drop:
-    - all
+      - all
     force_kill: true
   register: capabilities_4
 
@@ -158,10 +159,10 @@
 
 - assert:
     that:
-    - capabilities_1 is changed
-    - capabilities_2 is not changed
-    - capabilities_3 is not changed
-    - capabilities_4 is changed
+      - capabilities_1 is changed
+      - capabilities_2 is not changed
+      - capabilities_3 is not changed
+      - capabilities_4 is changed
 
 ####################################################################
 ## cgroupns_mode ###################################################
@@ -170,7 +171,7 @@
 - name: cgroupns_mode
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     cgroupns_mode: host
@@ -180,7 +181,7 @@
 - name: cgroupns_mode (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     cgroupns_mode: host
@@ -190,7 +191,7 @@
 - name: cgroupns_mode (changed)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     cgroupns_mode: private
@@ -206,23 +207,23 @@
 
 - assert:
     that:
-    - cgroupns_mode_1 is changed
-    - cgroupns_mode_2 is not changed and cgroupns_mode_2 is not failed
-    - >-
-      cgroupns_mode_3 is changed or
-      'Docker warning: Your kernel does not support cgroup namespaces.  Cgroup namespace setting discarded.' in (cgroupns_mode_3.warnings | default([])) or
-      (cgroupns_mode_3 is failed and 'error mounting "cgroup" to rootfs at "/sys/fs/cgroup"' in cgroupns_mode_3.msg)
+      - cgroupns_mode_1 is changed
+      - cgroupns_mode_2 is not changed and cgroupns_mode_2 is not failed
+      - >-
+        cgroupns_mode_3 is changed or
+        'Docker warning: Your kernel does not support cgroup namespaces.  Cgroup namespace setting discarded.' in (cgroupns_mode_3.warnings | default([])) or
+        (cgroupns_mode_3 is failed and 'error mounting "cgroup" to rootfs at "/sys/fs/cgroup"' in cgroupns_mode_3.msg)
   when: docker_api_version is version('1.41', '>=') and cgroupns_mode_1 is not failed
 - assert:
     that:
-    - >-
-      'error mounting "cgroup" to rootfs at "/sys/fs/cgroup"' in cgroupns_mode_1.msg
+      - >-
+        'error mounting "cgroup" to rootfs at "/sys/fs/cgroup"' in cgroupns_mode_1.msg
   when: docker_api_version is version('1.41', '>=') and cgroupns_mode_1 is failed
 - assert:
     that:
-    - cgroupns_mode_1 is failed
-    - |
-      ('API version is ' ~ docker_api_version ~ '.') in cgroupns_mode_1.msg and 'Minimum version required is 1.41 ' in cgroupns_mode_1.msg
+      - cgroupns_mode_1 is failed
+      - |
+        ('API version is ' ~ docker_api_version ~ '.') in cgroupns_mode_1.msg and 'Minimum version required is 1.41 ' in cgroupns_mode_1.msg
   when: docker_api_version is version('1.41', '<')
 
 ####################################################################
@@ -232,19 +233,19 @@
 - name: cgroup_parent
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
-    cgroup_parent: ''
+    cgroup_parent: ""
   register: cgroup_parent_1
 
 - name: cgroup_parent (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
-    cgroup_parent: ''
+    cgroup_parent: ""
   register: cgroup_parent_2
 
 - name: cleanup
@@ -256,8 +257,8 @@
 
 - assert:
     that:
-    - cgroup_parent_1 is changed
-    - cgroup_parent_2 is not changed
+      - cgroup_parent_1 is changed
+      - cgroup_parent_2 is not changed
 
 ####################################################################
 ## command #########################################################
@@ -269,7 +270,7 @@
   docker_container:
     image: "{{ docker_test_image_alpine }}"
     command_handling: compatibility
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     name: "{{ cname }}"
     state: started
   register: command_1
@@ -278,7 +279,7 @@
   docker_container:
     image: "{{ docker_test_image_alpine }}"
     command_handling: compatibility
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     name: "{{ cname }}"
     state: started
   register: command_2
@@ -289,8 +290,8 @@
     command_handling: compatibility
     command:
       - /bin/sh
-      - '-v'
-      - '-c'
+      - -v
+      - -c
       - '"sleep 10m"'
     name: "{{ cname }}"
     state: started
@@ -300,7 +301,7 @@
   docker_container:
     image: "{{ docker_test_image_alpine }}"
     command_handling: compatibility
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     force_kill: true
@@ -325,11 +326,11 @@
 
 - assert:
     that:
-    - command_1 is changed
-    - command_2 is not changed
-    - command_3 is not changed
-    - command_4 is changed
-    - command_5 is not changed
+      - command_1 is changed
+      - command_2 is not changed
+      - command_3 is not changed
+      - command_4 is changed
+      - command_5 is not changed
 
 # new
 
@@ -337,7 +338,7 @@
   docker_container:
     image: "{{ docker_test_image_alpine }}"
     command_handling: correct
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     name: "{{ cname }}"
     state: started
   register: command_1
@@ -346,7 +347,7 @@
   docker_container:
     image: "{{ docker_test_image_alpine }}"
     command_handling: correct
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     name: "{{ cname }}"
     state: started
   register: command_2
@@ -357,8 +358,8 @@
     command_handling: correct
     command:
       - /bin/sh
-      - '-v'
-      - '-c'
+      - -v
+      - -c
       - sleep 10m
     name: "{{ cname }}"
     state: started
@@ -368,7 +369,7 @@
   docker_container:
     image: "{{ docker_test_image_alpine }}"
     command_handling: correct
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     force_kill: true
@@ -393,11 +394,11 @@
 
 - assert:
     that:
-    - command_1 is changed
-    - command_2 is not changed
-    - command_3 is not changed
-    - command_4 is changed
-    - command_5 is changed
+      - command_1 is changed
+      - command_2 is not changed
+      - command_3 is not changed
+      - command_4 is changed
+      - command_5 is changed
 
 ####################################################################
 ## cpu_period ######################################################
@@ -406,7 +407,7 @@
 - name: cpu_period
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     cpu_period: 90000
     state: started
@@ -415,7 +416,7 @@
 - name: cpu_period (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     cpu_period: 90000
     state: started
@@ -424,7 +425,7 @@
 - name: cpu_period (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     cpu_period: 50000
     state: started
@@ -440,9 +441,9 @@
 
 - assert:
     that:
-    - cpu_period_1 is changed
-    - cpu_period_2 is not changed
-    - cpu_period_3 is changed
+      - cpu_period_1 is changed
+      - cpu_period_2 is not changed
+      - cpu_period_3 is changed
 
 ####################################################################
 ## cpu_quota #######################################################
@@ -451,7 +452,7 @@
 - name: cpu_quota
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     cpu_quota: 150000
     state: started
@@ -460,7 +461,7 @@
 - name: cpu_quota (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     cpu_quota: 150000
     state: started
@@ -469,7 +470,7 @@
 - name: cpu_quota (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     cpu_quota: 50000
     state: started
@@ -485,9 +486,9 @@
 
 - assert:
     that:
-    - cpu_quota_1 is changed
-    - cpu_quota_2 is not changed
-    - cpu_quota_3 is changed
+      - cpu_quota_1 is changed
+      - cpu_quota_2 is not changed
+      - cpu_quota_3 is changed
 
 ####################################################################
 ## cpu_shares ######################################################
@@ -496,7 +497,7 @@
 - name: cpu_shares
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     cpu_shares: 900
     state: started
@@ -505,7 +506,7 @@
 - name: cpu_shares (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     cpu_shares: 900
     state: started
@@ -514,7 +515,7 @@
 - name: cpu_shares (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     cpu_shares: 1100
     state: started
@@ -530,9 +531,9 @@
 
 - assert:
     that:
-    - cpu_shares_1 is changed
-    - cpu_shares_2 is not changed
-    - cpu_shares_3 is changed
+      - cpu_shares_1 is changed
+      - cpu_shares_2 is not changed
+      - cpu_shares_3 is changed
 
 ####################################################################
 ## cpuset_cpus #####################################################
@@ -541,7 +542,7 @@
 - name: cpuset_cpus
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     cpuset_cpus: "0"
     state: started
@@ -550,7 +551,7 @@
 - name: cpuset_cpus (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     cpuset_cpus: "0"
     state: started
@@ -559,7 +560,7 @@
 - name: cpuset_cpus (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     cpuset_cpus: "1"
     state: started
@@ -578,9 +579,9 @@
 
 - assert:
     that:
-    - cpuset_cpus_1 is changed
-    - cpuset_cpus_2 is not changed
-    - cpuset_cpus_3 is failed or cpuset_cpus_3 is changed
+      - cpuset_cpus_1 is changed
+      - cpuset_cpus_2 is not changed
+      - cpuset_cpus_3 is failed or cpuset_cpus_3 is changed
 
 ####################################################################
 ## cpuset_mems #####################################################
@@ -589,7 +590,7 @@
 - name: cpuset_mems
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     cpuset_mems: "0"
     state: started
@@ -598,7 +599,7 @@
 - name: cpuset_mems (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     cpuset_mems: "0"
     state: started
@@ -607,7 +608,7 @@
 - name: cpuset_mems (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     cpuset_mems: "1"
     state: started
@@ -626,9 +627,9 @@
 
 - assert:
     that:
-    - cpuset_mems_1 is changed
-    - cpuset_mems_2 is not changed
-    - cpuset_mems_3 is failed or cpuset_mems_3 is changed
+      - cpuset_mems_1 is changed
+      - cpuset_mems_2 is not changed
+      - cpuset_mems_3 is failed or cpuset_mems_3 is changed
 
 ####################################################################
 ## cpus ############################################################
@@ -637,7 +638,7 @@
 - name: cpus
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     cpus: 1
     state: started
@@ -646,7 +647,7 @@
 - name: cpus (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     cpus: 1
     state: started
@@ -655,7 +656,7 @@
 - name: cpus (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     cpus: 1.5
     state: started
@@ -673,9 +674,9 @@
 
 - assert:
     that:
-    - cpus_1 is changed
-    - cpus_2 is not changed and cpus_2 is not failed
-    - cpus_3 is failed or cpus_3 is changed
+      - cpus_1 is changed
+      - cpus_2 is not changed and cpus_2 is not failed
+      - cpus_3 is failed or cpus_3 is changed
 
 ####################################################################
 ## debug ###########################################################
@@ -684,7 +685,7 @@
 - name: debug (create)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: present
     debug: true
@@ -716,10 +717,10 @@
 
 - assert:
     that:
-    - debug_1 is changed
-    - debug_2 is changed
-    - debug_3 is changed
-    - debug_4 is changed
+      - debug_1 is changed
+      - debug_2 is changed
+      - debug_3 is changed
+      - debug_4 is changed
 
 ####################################################################
 ## detach, cleanup #################################################
@@ -775,7 +776,7 @@
   docker_container:
     name: "{{ cname }}"
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "exit 42"'
+    command: /bin/sh -c "exit 42"
     detach: false
     cleanup: true
   register: detach_cleanup_nonzero
@@ -787,20 +788,20 @@
     #      of hello-world. We don't know why this happens, but it happens
     #      often enough to be annoying. That's why we disable this for now,
     #      and simply test that 'Output' is contained in the result.
-    - "'Output' in detach_no_cleanup.container"
-    - detach_no_cleanup.status == 0
-    # - "'Hello from Docker!' in detach_no_cleanup.container.Output"
-    - detach_no_cleanup_cleanup is changed
-    - "'Output' in detach_cleanup.container"
-    - detach_cleanup.status == 0
-    # - "'Hello from Docker!' in detach_cleanup.container.Output"
-    - detach_cleanup_cleanup is not changed
-    - detach_cleanup_nonzero is failed
-    - detach_cleanup_nonzero.status == 42
-    - "'Output' in detach_cleanup_nonzero.container"
-    - "detach_cleanup_nonzero.container.Output == ''"
-    - "'Cannot retrieve result as auto_remove is enabled' == detach_auto_remove.container.Output"
-    - detach_auto_remove_cleanup is not changed
+      - "'Output' in detach_no_cleanup.container"
+      - detach_no_cleanup.status == 0
+      # - "'Hello from Docker!' in detach_no_cleanup.container.Output"
+      - detach_no_cleanup_cleanup is changed
+      - "'Output' in detach_cleanup.container"
+      - detach_cleanup.status == 0
+      # - "'Hello from Docker!' in detach_cleanup.container.Output"
+      - detach_cleanup_cleanup is not changed
+      - detach_cleanup_nonzero is failed
+      - detach_cleanup_nonzero.status == 42
+      - "'Output' in detach_cleanup_nonzero.container"
+      - detach_cleanup_nonzero.container.Output == ''
+      - "'Cannot retrieve result as auto_remove is enabled' == detach_auto_remove.container.Output"
+      - detach_auto_remove_cleanup is not changed
 
 ####################################################################
 ## devices #########################################################
@@ -809,44 +810,44 @@
 - name: devices
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     devices:
-    - "/dev/random:/dev/virt-random:rwm"
-    - "/dev/urandom:/dev/virt-urandom:rwm"
+      - /dev/random:/dev/virt-random:rwm
+      - /dev/urandom:/dev/virt-urandom:rwm
   register: devices_1
 
 - name: devices (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     devices:
-    - "/dev/urandom:/dev/virt-urandom:rwm"
-    - "/dev/random:/dev/virt-random:rwm"
+      - /dev/urandom:/dev/virt-urandom:rwm
+      - /dev/random:/dev/virt-random:rwm
   register: devices_2
 
 - name: devices (less)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     devices:
-    - "/dev/random:/dev/virt-random:rwm"
+      - /dev/random:/dev/virt-random:rwm
   register: devices_3
 
 - name: devices (changed)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     devices:
-    - "/dev/random:/dev/virt-random:rwm"
-    - "/dev/null:/dev/virt-null:rwm"
+      - /dev/random:/dev/virt-random:rwm
+      - /dev/null:/dev/virt-null:rwm
     force_kill: true
   register: devices_4
 
@@ -859,10 +860,10 @@
 
 - assert:
     that:
-    - devices_1 is changed
-    - devices_2 is not changed
-    - devices_3 is not changed
-    - devices_4 is changed
+      - devices_1 is changed
+      - devices_2 is not changed
+      - devices_3 is not changed
+      - devices_4 is changed
 
 ####################################################################
 ## device_read_bps #################################################
@@ -871,7 +872,7 @@
 - name: device_read_bps
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     device_read_bps:
@@ -885,7 +886,7 @@
 - name: device_read_bps (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     device_read_bps:
@@ -899,7 +900,7 @@
 - name: device_read_bps (lesser entries)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     device_read_bps:
@@ -911,7 +912,7 @@
 - name: device_read_bps (changed)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     device_read_bps:
@@ -933,19 +934,19 @@
 - when: device_read_bps_1 is not failed
   assert:
     that:
-    - device_read_bps_1 is not failed
-    - device_read_bps_1 is changed
-    - device_read_bps_2 is not failed
-    - device_read_bps_2 is not changed
-    - device_read_bps_3 is not failed
-    - device_read_bps_3 is not changed
-    - device_read_bps_4 is not failed
-    - device_read_bps_4 is changed
+      - device_read_bps_1 is not failed
+      - device_read_bps_1 is changed
+      - device_read_bps_2 is not failed
+      - device_read_bps_2 is not changed
+      - device_read_bps_3 is not failed
+      - device_read_bps_3 is not changed
+      - device_read_bps_4 is not failed
+      - device_read_bps_4 is changed
 
 - when: device_read_bps_1 is failed
   assert:
     that:
-    - "'error setting cgroup config for procHooks process' in device_read_bps_1.msg and 'blkio.throttle.read_bps_device: no such device' in device_read_bps_1.msg"
+      - "'error setting cgroup config for procHooks process' in device_read_bps_1.msg and 'blkio.throttle.read_bps_device: no such device' in device_read_bps_1.msg"
 
 ####################################################################
 ## device_read_iops ################################################
@@ -954,7 +955,7 @@
 - name: device_read_iops
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     device_read_iops:
@@ -968,7 +969,7 @@
 - name: device_read_iops (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     device_read_iops:
@@ -982,7 +983,7 @@
 - name: device_read_iops (less)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     device_read_iops:
@@ -994,7 +995,7 @@
 - name: device_read_iops (changed)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     device_read_iops:
@@ -1016,19 +1017,19 @@
 - when: device_read_iops_1 is not failed
   assert:
     that:
-    - device_read_iops_1 is not failed
-    - device_read_iops_1 is changed
-    - device_read_iops_2 is not failed
-    - device_read_iops_2 is not changed
-    - device_read_iops_3 is not failed
-    - device_read_iops_3 is not changed
-    - device_read_iops_4 is not failed
-    - device_read_iops_4 is changed
+      - device_read_iops_1 is not failed
+      - device_read_iops_1 is changed
+      - device_read_iops_2 is not failed
+      - device_read_iops_2 is not changed
+      - device_read_iops_3 is not failed
+      - device_read_iops_3 is not changed
+      - device_read_iops_4 is not failed
+      - device_read_iops_4 is changed
 
 - when: device_read_iops_1 is failed
   assert:
     that:
-    - "'error setting cgroup config for procHooks process' in device_read_iops_1.msg and 'blkio.throttle.read_iops_device: no such device' in device_read_iops_1.msg"
+      - "'error setting cgroup config for procHooks process' in device_read_iops_1.msg and 'blkio.throttle.read_iops_device: no such device' in device_read_iops_1.msg"
 
 ####################################################################
 ## device_write_bps and device_write_iops ##########################
@@ -1037,7 +1038,7 @@
 - name: device_write_bps and device_write_iops
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     device_write_bps:
@@ -1052,7 +1053,7 @@
 - name: device_write_bps and device_write_iops (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     device_write_bps:
@@ -1067,7 +1068,7 @@
 - name: device_write_bps device_write_iops (changed)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     device_write_bps:
@@ -1090,15 +1091,15 @@
 - when: device_write_limit_1 is not failed
   assert:
     that:
-    - device_write_limit_1 is not failed and device_write_limit_2 is not failed and device_write_limit_3 is not failed
-    - device_write_limit_1 is changed
-    - device_write_limit_2 is not changed
-    - device_write_limit_3 is changed
+      - device_write_limit_1 is not failed and device_write_limit_2 is not failed and device_write_limit_3 is not failed
+      - device_write_limit_1 is changed
+      - device_write_limit_2 is not changed
+      - device_write_limit_3 is changed
 
 - when: device_write_limit_1 is failed
   assert:
     that:
-    - "'error setting cgroup config for procHooks process' in device_write_limit_1.msg and 'blkio.throttle.write_bps_device: no such device' in device_write_limit_1.msg"
+      - "'error setting cgroup config for procHooks process' in device_write_limit_1.msg and 'blkio.throttle.write_bps_device: no such device' in device_write_limit_1.msg"
 
 ####################################################################
 ## device_requests #################################################
@@ -1107,7 +1108,7 @@
 - name: device_requests
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     device_requests: []
@@ -1117,7 +1118,7 @@
 - name: device_requests (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     device_requests: []
@@ -1133,14 +1134,14 @@
 
 - assert:
     that:
-    - device_requests_1 is changed
-    - device_requests_2 is not changed
+      - device_requests_1 is changed
+      - device_requests_2 is not changed
   when: docker_api_version is version('1.40', '>=')
 - assert:
     that:
-    - device_requests_1 is failed
-    - |
-      ('API version is ' ~ docker_api_version ~ '.') in device_requests_1.msg and 'Minimum version required is 1.40 ' in device_requests_1.msg
+      - device_requests_1 is failed
+      - |
+        ('API version is ' ~ docker_api_version ~ '.') in device_requests_1.msg and 'Minimum version required is 1.40 ' in device_requests_1.msg
   when: docker_api_version is version('1.40', '<')
 
 ####################################################################
@@ -1150,44 +1151,44 @@
 - name: dns_opts
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     dns_opts:
-    - "timeout:10"
-    - rotate
+      - timeout:10
+      - rotate
   register: dns_opts_1
 
 - name: dns_opts (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     dns_opts:
-    - rotate
-    - "timeout:10"
+      - rotate
+      - timeout:10
   register: dns_opts_2
 
 - name: dns_opts (less resolv.conf options)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     dns_opts:
-    - "timeout:10"
+      - timeout:10
   register: dns_opts_3
 
 - name: dns_opts (more resolv.conf options)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     dns_opts:
-    - "timeout:10"
-    - no-check-names
+      - timeout:10
+      - no-check-names
     force_kill: true
   register: dns_opts_4
 
@@ -1200,10 +1201,10 @@
 
 - assert:
     that:
-    - dns_opts_1 is changed
-    - dns_opts_2 is not changed
-    - dns_opts_3 is not changed
-    - dns_opts_4 is changed
+      - dns_opts_1 is changed
+      - dns_opts_2 is not changed
+      - dns_opts_3 is not changed
+      - dns_opts_4 is changed
 
 ####################################################################
 ## dns_search_domains ##############################################
@@ -1212,46 +1213,46 @@
 - name: dns_search_domains
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     dns_search_domains:
-    - example.com
-    - example.org
+      - example.com
+      - example.org
   register: dns_search_domains_1
 
 - name: dns_search_domains (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     dns_search_domains:
-    - example.com
-    - example.org
+      - example.com
+      - example.org
   register: dns_search_domains_2
 
 - name: dns_search_domains (different order)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     dns_search_domains:
-    - example.org
-    - example.com
+      - example.org
+      - example.com
     force_kill: true
   register: dns_search_domains_3
 
 - name: dns_search_domains (changed elements)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     dns_search_domains:
-    - ansible.com
-    - example.com
+      - ansible.com
+      - example.com
     force_kill: true
   register: dns_search_domains_4
 
@@ -1264,10 +1265,10 @@
 
 - assert:
     that:
-    - dns_search_domains_1 is changed
-    - dns_search_domains_2 is not changed
-    - dns_search_domains_3 is changed
-    - dns_search_domains_4 is changed
+      - dns_search_domains_1 is changed
+      - dns_search_domains_2 is not changed
+      - dns_search_domains_3 is changed
+      - dns_search_domains_4 is changed
 
 ####################################################################
 ## dns_servers #####################################################
@@ -1276,46 +1277,46 @@
 - name: dns_servers
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     dns_servers:
-    - 1.1.1.1
-    - 8.8.8.8
+      - 1.1.1.1
+      - 8.8.8.8
   register: dns_servers_1
 
 - name: dns_servers (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     dns_servers:
-    - 1.1.1.1
-    - 8.8.8.8
+      - 1.1.1.1
+      - 8.8.8.8
   register: dns_servers_2
 
 - name: dns_servers (changed order)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     dns_servers:
-    - 8.8.8.8
-    - 1.1.1.1
+      - 8.8.8.8
+      - 1.1.1.1
     force_kill: true
   register: dns_servers_3
 
 - name: dns_servers (changed elements)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     dns_servers:
-    - 8.8.8.8
-    - 9.9.9.9
+      - 8.8.8.8
+      - 9.9.9.9
     force_kill: true
   register: dns_servers_4
 
@@ -1328,10 +1329,10 @@
 
 - assert:
     that:
-    - dns_servers_1 is changed
-    - dns_servers_2 is not changed
-    - dns_servers_3 is changed
-    - dns_servers_4 is changed
+      - dns_servers_1 is changed
+      - dns_servers_2 is not changed
+      - dns_servers_3 is changed
+      - dns_servers_4 is changed
 
 ####################################################################
 ## domainname ######################################################
@@ -1340,7 +1341,7 @@
 - name: domainname
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     domainname: example.com
     state: started
@@ -1349,7 +1350,7 @@
 - name: domainname (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     domainname: example.com
     state: started
@@ -1358,7 +1359,7 @@
 - name: domainname (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     domainname: example.org
     state: started
@@ -1374,9 +1375,9 @@
 
 - assert:
     that:
-    - domainname_1 is changed
-    - domainname_2 is not changed
-    - domainname_3 is changed
+      - domainname_1 is changed
+      - domainname_2 is not changed
+      - domainname_3 is changed
 
 ####################################################################
 ## entrypoint ######################################################
@@ -1389,10 +1390,10 @@
     image: "{{ docker_test_image_alpine }}"
     command_handling: compatibility
     entrypoint:
-    - /bin/sh
-    - "-v"
-    - "-c"
-    - "'sleep 10m'"
+      - /bin/sh
+      - -v
+      - -c
+      - "'sleep 10m'"
     name: "{{ cname }}"
     state: started
   register: entrypoint_1
@@ -1402,10 +1403,10 @@
     image: "{{ docker_test_image_alpine }}"
     command_handling: compatibility
     entrypoint:
-    - /bin/sh
-    - "-v"
-    - "-c"
-    - "'sleep 10m'"
+      - /bin/sh
+      - -v
+      - -c
+      - "'sleep 10m'"
     name: "{{ cname }}"
     state: started
   register: entrypoint_2
@@ -1415,10 +1416,10 @@
     image: "{{ docker_test_image_alpine }}"
     command_handling: compatibility
     entrypoint:
-    - /bin/sh
-    - "-c"
-    - "'sleep 10m'"
-    - "-v"
+      - /bin/sh
+      - -c
+      - "'sleep 10m'"
+      - -v
     name: "{{ cname }}"
     state: started
     force_kill: true
@@ -1429,9 +1430,9 @@
     image: "{{ docker_test_image_alpine }}"
     command_handling: compatibility
     entrypoint:
-    - /bin/sh
-    - "-c"
-    - "'sleep 10m'"
+      - /bin/sh
+      - -c
+      - "'sleep 10m'"
     name: "{{ cname }}"
     state: started
     force_kill: true
@@ -1442,9 +1443,9 @@
     image: "{{ docker_test_image_alpine }}"
     command_handling: compatibility
     entrypoint:
-    - /bin/sh
-    - "-c"
-    - "'sleep 5m'"
+      - /bin/sh
+      - -c
+      - "'sleep 5m'"
     name: "{{ cname }}"
     state: started
     force_kill: true
@@ -1469,12 +1470,12 @@
 
 - assert:
     that:
-    - entrypoint_1 is changed
-    - entrypoint_2 is not changed
-    - entrypoint_3 is changed
-    - entrypoint_4 is changed
-    - entrypoint_5 is changed
-    - entrypoint_6 is not changed
+      - entrypoint_1 is changed
+      - entrypoint_2 is not changed
+      - entrypoint_3 is changed
+      - entrypoint_4 is changed
+      - entrypoint_5 is changed
+      - entrypoint_6 is not changed
 
 # New
 
@@ -1483,10 +1484,10 @@
     image: "{{ docker_test_image_alpine }}"
     command_handling: correct
     entrypoint:
-    - /bin/sh
-    - "-v"
-    - "-c"
-    - "sleep 10m"
+      - /bin/sh
+      - -v
+      - -c
+      - sleep 10m
     name: "{{ cname }}"
     state: started
   register: entrypoint_1
@@ -1496,10 +1497,10 @@
     image: "{{ docker_test_image_alpine }}"
     command_handling: correct
     entrypoint:
-    - /bin/sh
-    - "-v"
-    - "-c"
-    - "sleep 10m"
+      - /bin/sh
+      - -v
+      - -c
+      - sleep 10m
     name: "{{ cname }}"
     state: started
   register: entrypoint_2
@@ -1509,10 +1510,10 @@
     image: "{{ docker_test_image_alpine }}"
     command_handling: correct
     entrypoint:
-    - /bin/sh
-    - "-c"
-    - "sleep 10m"
-    - "-v"
+      - /bin/sh
+      - -c
+      - sleep 10m
+      - -v
     name: "{{ cname }}"
     state: started
     force_kill: true
@@ -1523,9 +1524,9 @@
     image: "{{ docker_test_image_alpine }}"
     command_handling: correct
     entrypoint:
-    - /bin/sh
-    - "-c"
-    - "sleep 10m"
+      - /bin/sh
+      - -c
+      - sleep 10m
     name: "{{ cname }}"
     state: started
     force_kill: true
@@ -1536,9 +1537,9 @@
     image: "{{ docker_test_image_alpine }}"
     command_handling: correct
     entrypoint:
-    - /bin/sh
-    - "-c"
-    - "sleep 5m"
+      - /bin/sh
+      - -c
+      - sleep 5m
     name: "{{ cname }}"
     state: started
     force_kill: true
@@ -1563,12 +1564,12 @@
 
 - assert:
     that:
-    - entrypoint_1 is changed
-    - entrypoint_2 is not changed
-    - entrypoint_3 is changed
-    - entrypoint_4 is changed
-    - entrypoint_5 is changed
-    - entrypoint_6 is changed
+      - entrypoint_1 is changed
+      - entrypoint_2 is not changed
+      - entrypoint_3 is changed
+      - entrypoint_4 is changed
+      - entrypoint_5 is changed
+      - entrypoint_6 is changed
 
 ####################################################################
 ## env #############################################################
@@ -1577,7 +1578,7 @@
 - name: env
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     env:
@@ -1591,7 +1592,7 @@
 - name: env (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     env:
@@ -1605,7 +1606,7 @@
 - name: env (less environment variables)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     env:
@@ -1615,7 +1616,7 @@
 - name: env (more environment variables)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     env:
@@ -1627,7 +1628,7 @@
 - name: env (fail unwrapped values)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     env:
@@ -1645,20 +1646,20 @@
 
 - assert:
     that:
-    - env_1 is changed
-    - "'TEST1=val1' in env_1.container.Config.Env"
-    - "'TEST2=val2' in env_1.container.Config.Env"
-    - "'TEST3=False' in env_1.container.Config.Env"
-    - "'TEST4=true' in env_1.container.Config.Env"
-    - "'TEST5=yes' in env_1.container.Config.Env"
-    - env_2 is not changed
-    - env_3 is not changed
-    - "'TEST1=val1' in env_4.container.Config.Env"
-    - "'TEST2=val2' not in env_4.container.Config.Env"
-    - "'TEST3=val3' in env_4.container.Config.Env"
-    - env_4 is changed
-    - env_5 is failed
-    - "('Non-string value found for env option.') in env_5.msg"
+      - env_1 is changed
+      - "'TEST1=val1' in env_1.container.Config.Env"
+      - "'TEST2=val2' in env_1.container.Config.Env"
+      - "'TEST3=False' in env_1.container.Config.Env"
+      - "'TEST4=true' in env_1.container.Config.Env"
+      - "'TEST5=yes' in env_1.container.Config.Env"
+      - env_2 is not changed
+      - env_3 is not changed
+      - "'TEST1=val1' in env_4.container.Config.Env"
+      - "'TEST2=val2' not in env_4.container.Config.Env"
+      - "'TEST3=val3' in env_4.container.Config.Env"
+      - env_4 is changed
+      - env_5 is failed
+      - ('Non-string value found for env option.') in env_5.msg
 
 ####################################################################
 ## env_file #########################################################
@@ -1672,7 +1673,7 @@
 - name: env_file
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     env_file: "{{ remote_tmp_dir }}/env-file"
@@ -1681,7 +1682,7 @@
 - name: env_file (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     env_file: "{{ remote_tmp_dir }}/env-file"
@@ -1690,7 +1691,7 @@
 - name: env_file (with env, idempotent)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     env_file: "{{ remote_tmp_dir }}/env-file"
@@ -1701,7 +1702,7 @@
 - name: env_file (with env)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     env_file: "{{ remote_tmp_dir }}/env-file"
@@ -1714,7 +1715,7 @@
 - name: env_file (with env, idempotent)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     env_file: "{{ remote_tmp_dir }}/env-file"
@@ -1725,7 +1726,7 @@
 - name: env_file (with env, override)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     env_file: "{{ remote_tmp_dir }}/env-file"
@@ -1744,20 +1745,20 @@
 
 - assert:
     that:
-    - env_file_1 is changed
-    - "'TEST3=val3' in env_file_1.container.Config.Env"
-    - "'TEST4=val4' in env_file_1.container.Config.Env"
-    - env_file_2 is not changed
-    - env_file_3 is not changed
-    - env_file_4 is changed
-    - "'TEST1=val1' in env_file_4.container.Config.Env"
-    - "'TEST3=val3' in env_file_4.container.Config.Env"
-    - "'TEST4=val4' in env_file_4.container.Config.Env"
-    - env_file_5 is not changed
-    - env_file_6 is changed
-    - "'TEST2=val2' in env_file_6.container.Config.Env"
-    - "'TEST3=val3' in env_file_6.container.Config.Env"
-    - "'TEST4=val4alt' in env_file_6.container.Config.Env"
+      - env_file_1 is changed
+      - "'TEST3=val3' in env_file_1.container.Config.Env"
+      - "'TEST4=val4' in env_file_1.container.Config.Env"
+      - env_file_2 is not changed
+      - env_file_3 is not changed
+      - env_file_4 is changed
+      - "'TEST1=val1' in env_file_4.container.Config.Env"
+      - "'TEST3=val3' in env_file_4.container.Config.Env"
+      - "'TEST4=val4' in env_file_4.container.Config.Env"
+      - env_file_5 is not changed
+      - env_file_6 is changed
+      - "'TEST2=val2' in env_file_6.container.Config.Env"
+      - "'TEST3=val3' in env_file_6.container.Config.Env"
+      - "'TEST4=val4alt' in env_file_6.container.Config.Env"
 
 ####################################################################
 ## etc_hosts #######################################################
@@ -1766,7 +1767,7 @@
 - name: etc_hosts
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     etc_hosts:
@@ -1777,7 +1778,7 @@
 - name: etc_hosts (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     etc_hosts:
@@ -1788,7 +1789,7 @@
 - name: etc_hosts (less hosts)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     etc_hosts:
@@ -1798,7 +1799,7 @@
 - name: etc_hosts (more hosts)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     etc_hosts:
@@ -1816,10 +1817,10 @@
 
 - assert:
     that:
-    - etc_hosts_1 is changed
-    - etc_hosts_2 is not changed
-    - etc_hosts_3 is not changed
-    - etc_hosts_4 is changed
+      - etc_hosts_1 is changed
+      - etc_hosts_2 is not changed
+      - etc_hosts_3 is not changed
+      - etc_hosts_4 is changed
 
 ####################################################################
 ## exposed_ports ###################################################
@@ -1828,44 +1829,44 @@
 - name: exposed_ports
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     exposed_ports:
-    - "9001"
-    - "9002"
+      - "9001"
+      - "9002"
   register: exposed_ports_1
 
 - name: exposed_ports (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     exposed_ports:
-    - "9002"
-    - "9001"
+      - "9002"
+      - "9001"
   register: exposed_ports_2
 
 - name: exposed_ports (less ports)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     exposed_ports:
-    - "9002"
+      - "9002"
   register: exposed_ports_3
 
 - name: exposed_ports (more ports)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     exposed_ports:
-    - "9002"
-    - "9003"
+      - "9002"
+      - "9003"
     force_kill: true
   register: exposed_ports_4
 
@@ -1878,10 +1879,10 @@
 
 - assert:
     that:
-    - exposed_ports_1 is changed
-    - exposed_ports_2 is not changed
-    - exposed_ports_3 is not changed
-    - exposed_ports_4 is changed
+      - exposed_ports_1 is changed
+      - exposed_ports_2 is not changed
+      - exposed_ports_3 is not changed
+      - exposed_ports_4 is changed
 
 ####################################################################
 ## force_kill ######################################################
@@ -1896,44 +1897,44 @@
 - name: groups
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     groups:
-    - "1234"
-    - "5678"
+      - "1234"
+      - "5678"
   register: groups_1
 
 - name: groups (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     groups:
-    - "5678"
-    - "1234"
+      - "5678"
+      - "1234"
   register: groups_2
 
 - name: groups (less groups)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     groups:
-    - "1234"
+      - "1234"
   register: groups_3
 
 - name: groups (more groups)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     groups:
-    - "1234"
-    - "2345"
+      - "1234"
+      - "2345"
     force_kill: true
   register: groups_4
 
@@ -1946,10 +1947,10 @@
 
 - assert:
     that:
-    - groups_1 is changed
-    - groups_2 is not changed
-    - groups_3 is not changed
-    - groups_4 is changed
+      - groups_1 is changed
+      - groups_2 is not changed
+      - groups_3 is not changed
+      - groups_4 is changed
 
 ####################################################################
 ## healthcheck #####################################################
@@ -1958,16 +1959,16 @@
 - name: healthcheck
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     healthcheck:
       test:
-      - CMD
-      - sleep
-      - 1
+        - CMD
+        - sleep
+        - 1
       timeout: 2s
-      interval: 0h0m2s3ms4us
+      interval: "0h0m2s3ms4us"
       retries: 2
     force_kill: true
   register: healthcheck_1
@@ -1975,16 +1976,16 @@
 - name: healthcheck (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     healthcheck:
       test:
-      - CMD
-      - sleep
-      - 1
+        - CMD
+        - sleep
+        - 1
       timeout: 2s
-      interval: 0h0m2s3ms4us
+      interval: "0h0m2s3ms4us"
       retries: 2
     force_kill: true
   register: healthcheck_2
@@ -1992,16 +1993,16 @@
 - name: healthcheck (changed)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     healthcheck:
       test:
-      - CMD
-      - sleep
-      - 1
+        - CMD
+        - sleep
+        - 1
       timeout: 3s
-      interval: 0h1m2s3ms4us
+      interval: "0h1m2s3ms4us"
       retries: 3
     force_kill: true
   register: healthcheck_3
@@ -2009,7 +2010,7 @@
 - name: healthcheck (no change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     force_kill: true
@@ -2018,60 +2019,60 @@
 - name: healthcheck (disabled)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     healthcheck:
       test:
-      - NONE
+        - NONE
     force_kill: true
   register: healthcheck_5
 
 - name: healthcheck (disabled, idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     healthcheck:
       test:
-      - NONE
+        - NONE
     force_kill: true
   register: healthcheck_6
 
 - name: healthcheck (disabled, idempotency, strict)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     healthcheck:
       test:
-      - NONE
+        - NONE
     force_kill: true
     comparisons:
-      '*': strict
+      "*": strict
   register: healthcheck_7
 
 - name: healthcheck (string in healthcheck test, changed)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     healthcheck:
-      test: "sleep 1"
+      test: sleep 1
     force_kill: true
   register: healthcheck_8
 
 - name: healthcheck (string in healthcheck test, idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     healthcheck:
-      test: "sleep 1"
+      test: sleep 1
     force_kill: true
   register: healthcheck_9
 
@@ -2084,15 +2085,15 @@
 
 - assert:
     that:
-    - healthcheck_1 is changed
-    - healthcheck_2 is not changed
-    - healthcheck_3 is changed
-    - healthcheck_4 is not changed
-    - healthcheck_5 is changed
-    - healthcheck_6 is not changed
-    - healthcheck_7 is not changed
-    - healthcheck_8 is changed
-    - healthcheck_9 is not changed
+      - healthcheck_1 is changed
+      - healthcheck_2 is not changed
+      - healthcheck_3 is changed
+      - healthcheck_4 is not changed
+      - healthcheck_5 is changed
+      - healthcheck_6 is not changed
+      - healthcheck_7 is not changed
+      - healthcheck_8 is changed
+      - healthcheck_9 is not changed
 
 ####################################################################
 ## hostname ########################################################
@@ -2101,7 +2102,7 @@
 - name: hostname
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     hostname: me.example.com
     state: started
@@ -2110,7 +2111,7 @@
 - name: hostname (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     hostname: me.example.com
     state: started
@@ -2119,7 +2120,7 @@
 - name: hostname (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     hostname: me.example.org
     state: started
@@ -2135,9 +2136,9 @@
 
 - assert:
     that:
-    - hostname_1 is changed
-    - hostname_2 is not changed
-    - hostname_3 is changed
+      - hostname_1 is changed
+      - hostname_2 is not changed
+      - hostname_3 is changed
 
 ####################################################################
 ## init ############################################################
@@ -2146,7 +2147,7 @@
 - name: init
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     init: true
     state: started
@@ -2155,7 +2156,7 @@
 - name: init (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     init: true
     state: started
@@ -2164,7 +2165,7 @@
 - name: init (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     init: false
     state: started
@@ -2180,9 +2181,9 @@
 
 - assert:
     that:
-    - init_1 is changed
-    - init_2 is not changed
-    - init_3 is changed
+      - init_1 is changed
+      - init_2 is not changed
+      - init_3 is changed
 
 ####################################################################
 ## interactive #####################################################
@@ -2191,7 +2192,7 @@
 - name: interactive
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     interactive: true
     state: started
@@ -2200,7 +2201,7 @@
 - name: interactive (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     interactive: true
     state: started
@@ -2209,7 +2210,7 @@
 - name: interactive (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     interactive: false
     state: started
@@ -2225,9 +2226,9 @@
 
 - assert:
     that:
-    - interactive_1 is changed
-    - interactive_2 is not changed
-    - interactive_3 is changed
+      - interactive_1 is changed
+      - interactive_2 is not changed
+      - interactive_3 is changed
 
 ####################################################################
 ## image / image_comparison / ignore_image #########################
@@ -2245,7 +2246,7 @@
 - name: image
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
   register: image_1
@@ -2253,7 +2254,7 @@
 - name: image (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
   register: image_2
@@ -2310,12 +2311,12 @@
 
 - assert:
     that:
-    - image_1 is changed
-    - image_2 is not changed
-    - ignore_image is not changed
-    - ignore_image_2 is not changed
-    - ignore_image_3 is changed
-    - image_change is changed
+      - image_1 is changed
+      - image_2 is not changed
+      - ignore_image is not changed
+      - ignore_image_2 is not changed
+      - ignore_image_3 is changed
+      - image_change is changed
 
 ####################################################################
 ## image_label_mismatch ############################################
@@ -2329,13 +2330,13 @@
     inames: "{{ inames + [iname_labels] }}"
 - name: build image with labels
   command:
-    cmd: "docker build --label img_label=base --tag {{ iname_labels }} -"
-    stdin: "FROM {{ docker_test_image_alpine }}"
+    cmd: docker build --label img_label=base --tag {{ iname_labels }} -
+    stdin: FROM {{ docker_test_image_alpine }}
 
 - name: image_label_mismatch
   docker_container:
     image: "{{ iname_labels }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
   register: image_label_mismatch_1
@@ -2343,7 +2344,7 @@
 - name: image_label_mismatch (ignore,unmanaged labels)
   docker_container:
     image: "{{ iname_labels }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     image_label_mismatch: ignore
     state: started
@@ -2352,7 +2353,7 @@
 - name: image_label_mismatch (ignore,missing img label)
   docker_container:
     image: "{{ iname_labels }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     image_label_mismatch: ignore
     labels: {}
@@ -2362,7 +2363,7 @@
 - name: image_label_mismatch (ignore,match img label)
   docker_container:
     image: "{{ iname_labels }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     image_label_mismatch: ignore
     labels:
@@ -2373,7 +2374,7 @@
 - name: image_label_mismatch (ignore,mismatched img label)
   docker_container:
     image: "{{ iname_labels }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     image_label_mismatch: ignore
     labels:
@@ -2385,7 +2386,7 @@
 - name: image_label_mismatch (ignore,remove img label)
   docker_container:
     image: "{{ iname_labels }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     image_label_mismatch: ignore
     labels: {}
@@ -2396,7 +2397,7 @@
 - name: image_label_mismatch (fail,unmanaged labels)
   docker_container:
     image: "{{ iname_labels }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     image_label_mismatch: fail
     state: started
@@ -2405,7 +2406,7 @@
 - name: image_label_mismatch (fail,non-strict,missing img label)
   docker_container:
     image: "{{ iname_labels }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     image_label_mismatch: fail
     labels: {}
@@ -2415,7 +2416,7 @@
 - name: image_label_mismatch (fail,strict,missing img label)
   docker_container:
     image: "{{ iname_labels }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     image_label_mismatch: fail
     comparisons:
@@ -2428,7 +2429,7 @@
 - name: image_label_mismatch (fail,match img label)
   docker_container:
     image: "{{ iname_labels }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     image_label_mismatch: fail
     labels:
@@ -2439,7 +2440,7 @@
 - name: image_label_mismatch (fail,mismatched img label)
   docker_container:
     image: "{{ iname_labels }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     image_label_mismatch: fail
     labels:
@@ -2463,22 +2464,23 @@
 
 - assert:
     that:
-    - image_label_mismatch_1 is changed
-    - image_label_mismatch_1.container.Config.Labels.img_label == "base"
-    - image_label_mismatch_2 is not changed
-    - image_label_mismatch_3 is not changed
-    - image_label_mismatch_4 is not changed
-    - image_label_mismatch_5 is changed
-    - image_label_mismatch_5.container.Config.Labels.img_label == "override"
-    - image_label_mismatch_6 is changed
-    - image_label_mismatch_6.container.Config.Labels.img_label == "base"
-    - image_label_mismatch_7 is not changed
-    - image_label_mismatch_8 is not changed
-    - image_label_mismatch_9 is failed
-    - >-
-      image_label_mismatch_9.msg == ("Some labels should be removed but are present in the base image. You can set image_label_mismatch to 'ignore' to ignore this error. " ~ 'Labels: "img_label"')
-    - image_label_mismatch_10 is not changed
-    - image_label_mismatch_11 is changed
+      - image_label_mismatch_1 is changed
+      - image_label_mismatch_1.container.Config.Labels.img_label == "base"
+      - image_label_mismatch_2 is not changed
+      - image_label_mismatch_3 is not changed
+      - image_label_mismatch_4 is not changed
+      - image_label_mismatch_5 is changed
+      - image_label_mismatch_5.container.Config.Labels.img_label == "override"
+      - image_label_mismatch_6 is changed
+      - image_label_mismatch_6.container.Config.Labels.img_label == "base"
+      - image_label_mismatch_7 is not changed
+      - image_label_mismatch_8 is not changed
+      - image_label_mismatch_9 is failed
+      - >-
+        image_label_mismatch_9.msg == ("Some labels should be removed but are present in the base image. You can set image_label_mismatch to 'ignore' to ignore this
+        error. " ~ 'Labels: "img_label"')
+      - image_label_mismatch_10 is not changed
+      - image_label_mismatch_11 is changed
 
 ####################################################################
 ## image_name_mismatch #############################################
@@ -2496,7 +2498,7 @@
 - name: image
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
   register: image_1
@@ -2504,7 +2506,7 @@
 - name: image (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
   register: image_2
@@ -2558,12 +2560,12 @@
 
 - assert:
     that:
-    - image_1 is changed
-    - image_2 is not changed
-    - ignore_image is not changed
-    - ignore_image_2 is not changed
-    - ignore_image_3 is changed
-    - image_change is changed
+      - image_1 is changed
+      - image_2 is not changed
+      - ignore_image is not changed
+      - ignore_image_2 is not changed
+      - ignore_image_3 is changed
+      - image_change is changed
 
 ####################################################################
 ## image_name_mismatch #############################################
@@ -2585,7 +2587,7 @@
 - name: image_name_mismatch
   docker_container:
     image: "{{ docker_test_image_registry_nginx }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
   register: image_name_mismatch_1
@@ -2593,7 +2595,7 @@
 - name: image_name_mismatch (ignore)
   docker_container:
     image: "{{ iname_name_mismatch }}:latest"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     image_name_mismatch: ignore
     state: started
@@ -2602,7 +2604,7 @@
 - name: image_name_mismatch (recreate)
   docker_container:
     image: "{{ iname_name_mismatch }}:latest"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     image_name_mismatch: recreate
     state: started
@@ -2624,10 +2626,10 @@
 
 - assert:
     that:
-    - image_name_mismatch_1 is changed
-    - image_name_mismatch_2 is not changed
-    - image_name_mismatch_3 is changed
-    - image_name_mismatch_3.container.Image == image_name_mismatch_2.container.Image
+      - image_name_mismatch_1 is changed
+      - image_name_mismatch_2 is not changed
+      - image_name_mismatch_3 is changed
+      - image_name_mismatch_3.container.Image == image_name_mismatch_2.container.Image
 
 ####################################################################
 ## ipc_mode ########################################################
@@ -2636,39 +2638,39 @@
 - name: start helpers
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ container_name }}"
     state: started
     ipc_mode: shareable
   loop:
-  - "{{ cname_h1 }}"
+    - "{{ cname_h1 }}"
   loop_control:
     loop_var: container_name
 
 - name: ipc_mode
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
-    ipc_mode: "container:{{ cname_h1 }}"
+    ipc_mode: container:{{ cname_h1 }}
     # ipc_mode: shareable
   register: ipc_mode_1
 
 - name: ipc_mode (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
-    ipc_mode: "container:{{ cname_h1 }}"
+    ipc_mode: container:{{ cname_h1 }}
     # ipc_mode: shareable
   register: ipc_mode_2
 
 - name: ipc_mode (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     ipc_mode: private
@@ -2681,17 +2683,17 @@
     state: absent
     force_kill: true
   loop:
-  - "{{ cname }}"
-  - "{{ cname_h1 }}"
+    - "{{ cname }}"
+    - "{{ cname_h1 }}"
   loop_control:
     loop_var: container_name
   diff: false
 
 - assert:
     that:
-    - ipc_mode_1 is changed
-    - ipc_mode_2 is not changed
-    - ipc_mode_3 is changed
+      - ipc_mode_1 is changed
+      - ipc_mode_2 is not changed
+      - ipc_mode_3 is changed
 
 ####################################################################
 ## kernel_memory ###################################################
@@ -2700,7 +2702,7 @@
 - name: kernel_memory
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     kernel_memory: 8M
     state: started
@@ -2710,7 +2712,7 @@
 - name: kernel_memory (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     kernel_memory: 8M
     state: started
@@ -2720,7 +2722,7 @@
 - name: kernel_memory (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     kernel_memory: 6M
     state: started
@@ -2737,9 +2739,9 @@
 
 - assert:
     that:
-    - kernel_memory_1 is changed
-    - kernel_memory_2 is not changed
-    - kernel_memory_3 is changed
+      - kernel_memory_1 is changed
+      - kernel_memory_2 is not changed
+      - kernel_memory_3 is changed
   when:
     - kernel_memory_1 is not failed or 'kernel memory accounting disabled in this runc build' not in kernel_memory_1.msg
     - "'Docker warning: Specifying a kernel memory limit is deprecated and will be removed in a future release.' not in (kernel_memory_1.warnings | default([]))"
@@ -2759,7 +2761,7 @@
 - name: labels
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     labels:
@@ -2770,7 +2772,7 @@
 - name: labels (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     labels:
@@ -2781,7 +2783,7 @@
 - name: labels (less labels)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     labels:
@@ -2791,7 +2793,7 @@
 - name: labels (more labels)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     labels:
@@ -2809,10 +2811,10 @@
 
 - assert:
     that:
-    - labels_1 is changed
-    - labels_2 is not changed
-    - labels_3 is not changed
-    - labels_4 is changed
+      - labels_1 is changed
+      - labels_2 is not changed
+      - labels_3 is not changed
+      - labels_4 is changed
 
 ####################################################################
 ## links ###########################################################
@@ -2821,57 +2823,57 @@
 - name: start helpers
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ container_name }}"
     state: started
   loop:
-  - "{{ cname_h1 }}"
-  - "{{ cname_h2 }}"
-  - "{{ cname_h3 }}"
+    - "{{ cname_h1 }}"
+    - "{{ cname_h2 }}"
+    - "{{ cname_h3 }}"
   loop_control:
     loop_var: container_name
 
 - name: links
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     links:
-    - "{{ cname_h1 }}:test1"
-    - "{{ cname_h2 }}:test2"
+      - "{{ cname_h1 }}:test1"
+      - "{{ cname_h2 }}:test2"
   register: links_1
 
 - name: links (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     links:
-    - "{{ cname_h2 }}:test2"
-    - "{{ cname_h1 }}:test1"
+      - "{{ cname_h2 }}:test2"
+      - "{{ cname_h1 }}:test1"
   register: links_2
 
 - name: links (less links)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     links:
-    - "{{ cname_h1 }}:test1"
+      - "{{ cname_h1 }}:test1"
   register: links_3
 
 - name: links (more links)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     links:
-    - "{{ cname_h1 }}:test1"
-    - "{{ cname_h3 }}:test3"
+      - "{{ cname_h1 }}:test1"
+      - "{{ cname_h3 }}:test3"
     force_kill: true
   register: links_4
 
@@ -2881,20 +2883,20 @@
     state: absent
     force_kill: true
   loop:
-  - "{{ cname }}"
-  - "{{ cname_h1 }}"
-  - "{{ cname_h2 }}"
-  - "{{ cname_h3 }}"
+    - "{{ cname }}"
+    - "{{ cname_h1 }}"
+    - "{{ cname_h2 }}"
+    - "{{ cname_h3 }}"
   loop_control:
     loop_var: container_name
   diff: false
 
 - assert:
     that:
-    - links_1 is changed
-    - links_2 is not changed
-    - links_3 is not changed
-    - links_4 is changed
+      - links_1 is changed
+      - links_2 is not changed
+      - links_3 is not changed
+      - links_4 is changed
 
 ####################################################################
 ## log_driver ######################################################
@@ -2903,7 +2905,7 @@
 - name: log_driver
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     log_driver: json-file
@@ -2912,7 +2914,7 @@
 - name: log_driver (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     log_driver: json-file
@@ -2921,7 +2923,7 @@
 - name: log_driver (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     log_driver: syslog
@@ -2937,9 +2939,9 @@
 
 - assert:
     that:
-    - log_driver_1 is changed
-    - log_driver_2 is not changed
-    - log_driver_3 is changed
+      - log_driver_1 is changed
+      - log_driver_2 is not changed
+      - log_driver_3 is changed
 
 ####################################################################
 ## log_options #####################################################
@@ -2948,7 +2950,7 @@
 - name: log_options
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     log_driver: json-file
@@ -2961,7 +2963,7 @@
 - name: log_options (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     log_driver: json-file
@@ -2974,7 +2976,7 @@
 - name: log_options (less log options)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     log_driver: json-file
@@ -2985,7 +2987,7 @@
 - name: log_options (more log options)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     log_driver: json-file
@@ -3004,12 +3006,12 @@
 
 - assert:
     that:
-    - log_options_1 is changed
-    - log_options_2 is not changed
-    - "'Non-string value found for log_options option \\'max-file\\'. The value is automatically converted to \\'5\\'. If this is not correct, or you want to
-avoid such warnings, please quote the value.' in (log_options_2.warnings | default([]))"
-    - log_options_3 is not changed
-    - log_options_4 is changed
+      - log_options_1 is changed
+      - log_options_2 is not changed
+      - "'Non-string value found for log_options option \\'max-file\\'. The value is automatically converted to \\'5\\'. If this is not correct, or you want to avoid
+        such warnings, please quote the value.' in (log_options_2.warnings | default([]))"
+      - log_options_3 is not changed
+      - log_options_4 is changed
 
 ####################################################################
 ## mac_address #####################################################
@@ -3018,7 +3020,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: mac_address
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     mac_address: 92:d0:c6:0a:29:33
     state: started
@@ -3027,7 +3029,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: mac_address (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     mac_address: 92:d0:c6:0a:29:33
     state: started
@@ -3036,7 +3038,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: mac_address (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     mac_address: 92:d0:c6:0a:29:44
     state: started
@@ -3052,9 +3054,9 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - mac_address_1 is changed
-    - mac_address_2 is not changed
-    - mac_address_3 is changed
+      - mac_address_1 is changed
+      - mac_address_2 is not changed
+      - mac_address_3 is changed
 
 ####################################################################
 ## memory ##########################################################
@@ -3063,7 +3065,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: memory
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     memory: 64M
     state: started
@@ -3072,7 +3074,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: memory (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     memory: 64M
     state: started
@@ -3081,7 +3083,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: memory (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     memory: 48M
     state: started
@@ -3097,9 +3099,9 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - memory_1 is changed
-    - memory_2 is not changed
-    - memory_3 is changed
+      - memory_1 is changed
+      - memory_2 is not changed
+      - memory_3 is changed
 
 ####################################################################
 ## memory_reservation ##############################################
@@ -3108,7 +3110,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: memory_reservation
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     memory_reservation: 64M
     state: started
@@ -3117,7 +3119,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: memory_reservation (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     memory_reservation: 64M
     state: started
@@ -3126,7 +3128,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: memory_reservation (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     memory_reservation: 48M
     state: started
@@ -3142,9 +3144,9 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - memory_reservation_1 is changed
-    - memory_reservation_2 is not changed
-    - memory_reservation_3 is changed
+      - memory_reservation_1 is changed
+      - memory_reservation_2 is not changed
+      - memory_reservation_3 is changed
 
 ####################################################################
 ## memory_swap #####################################################
@@ -3153,7 +3155,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: memory_swap
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     # Docker daemon does not accept memory_swap if memory is not specified
     memory: 32M
@@ -3165,7 +3167,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: memory_swap (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     # Docker daemon does not accept memory_swap if memory is not specified
     memory: 32M
@@ -3177,7 +3179,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: memory_swap (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     # Docker daemon does not accept memory_swap if memory is not specified
     memory: 32M
@@ -3190,7 +3192,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: memory_swap (unlimited)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     # Docker daemon does not accept memory_swap if memory is not specified
     memory: 32M
@@ -3203,7 +3205,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: memory_swap (unlimited via -1)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     # Docker daemon does not accept memory_swap if memory is not specified
     memory: 32M
@@ -3222,16 +3224,16 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - memory_swap_1 is changed
-    # Sometimes (in particular during integration tests, maybe when not running
-    # on a proper VM), memory_swap cannot be set and will be -1 afterwards.
-    - memory_swap_2 is not changed or memory_swap_2.container.HostConfig.MemorySwap == -1
-    - memory_swap_3 is changed
-    # Unlimited memory_swap (using 'unlimited') should be allowed
-    # (If the value was already -1 because of the above reasons, it won't change)
-    - (memory_swap_4 is changed or memory_swap_3.container.HostConfig.MemorySwap == -1) and memory_swap_4.container.HostConfig.MemorySwap == -1
-    # Unlimited memory_swap (using '-1') should be allowed
-    - memory_swap_5 is not changed and memory_swap_5.container.HostConfig.MemorySwap == -1
+      - memory_swap_1 is changed
+      # Sometimes (in particular during integration tests, maybe when not running
+      # on a proper VM), memory_swap cannot be set and will be -1 afterwards.
+      - memory_swap_2 is not changed or memory_swap_2.container.HostConfig.MemorySwap == -1
+      - memory_swap_3 is changed
+      # Unlimited memory_swap (using 'unlimited') should be allowed
+      # (If the value was already -1 because of the above reasons, it won't change)
+      - (memory_swap_4 is changed or memory_swap_3.container.HostConfig.MemorySwap == -1) and memory_swap_4.container.HostConfig.MemorySwap == -1
+      # Unlimited memory_swap (using '-1') should be allowed
+      - memory_swap_5 is not changed and memory_swap_5.container.HostConfig.MemorySwap == -1
 
 - debug: var=memory_swap_1
   when: memory_swap_2 is changed
@@ -3247,7 +3249,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: memory_swappiness
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     memory_swappiness: 40
     state: started
@@ -3256,7 +3258,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: memory_swappiness (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     memory_swappiness: 40
     state: started
@@ -3265,7 +3267,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: memory_swappiness (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     memory_swappiness: 60
     state: started
@@ -3281,10 +3283,11 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - memory_swappiness_1 is changed
-    - memory_swappiness_2 is not changed
-    - memory_swappiness_3 is changed
-  when: "'Docker warning: Your kernel does not support memory swappiness capabilities or the cgroup is not mounted. Memory swappiness discarded.' not in (memory_swappiness_1.warnings | default([]))"
+      - memory_swappiness_1 is changed
+      - memory_swappiness_2 is not changed
+      - memory_swappiness_3 is changed
+  when: "'Docker warning: Your kernel does not support memory swappiness capabilities or the cgroup is not mounted. Memory swappiness discarded.' not in (memory_swappiness_1.warnings
+    | default([]))"
 
 ####################################################################
 ## oom_killer ######################################################
@@ -3293,7 +3296,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: oom_killer
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     oom_killer: true
     state: started
@@ -3302,7 +3305,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: oom_killer (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     oom_killer: true
     state: started
@@ -3311,7 +3314,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: oom_killer (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     oom_killer: false
     state: started
@@ -3327,9 +3330,9 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - oom_killer_1 is changed
-    - oom_killer_2 is not changed
-    - oom_killer_3 is changed
+      - oom_killer_1 is changed
+      - oom_killer_2 is not changed
+      - oom_killer_3 is changed
   when: "'Docker warning: Your kernel does not support OomKillDisable. OomKillDisable discarded.' not in (oom_killer_1.warnings | default([]))"
 
 ####################################################################
@@ -3339,7 +3342,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: oom_score_adj
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     oom_score_adj: 5
     state: started
@@ -3348,7 +3351,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: oom_score_adj (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     oom_score_adj: 5
     state: started
@@ -3357,7 +3360,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: oom_score_adj (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     oom_score_adj: 7
     state: started
@@ -3373,9 +3376,9 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - oom_score_adj_1 is changed
-    - oom_score_adj_2 is not changed
-    - oom_score_adj_3 is changed
+      - oom_score_adj_1 is changed
+      - oom_score_adj_2 is not changed
+      - oom_score_adj_3 is changed
   when: "'Docker warning: Your kernel does not support OomScoreAdj. OomScoreAdj discarded.' not in (oom_score_adj_1.warnings | default([]))"
 
 ####################################################################
@@ -3391,7 +3394,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: paused
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: "/bin/sh -c 'sleep 10m'"
+    command: /bin/sh -c 'sleep 10m'
     name: "{{ cname }}"
     state: started
     paused: true
@@ -3399,13 +3402,13 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
   register: paused_1
 
 - name: inspect paused
-  command: "docker inspect -f {% raw %}'{{.State.Status}} {{.State.Paused}}'{% endraw %} {{ cname }}"
+  command: docker inspect -f {% raw %}'{{.State.Status}} {{.State.Paused}}'{% endraw %} {{ cname }}
   register: paused_2
 
 - name: paused (idempotent)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: "/bin/sh -c 'sleep 10m'"
+    command: /bin/sh -c 'sleep 10m'
     name: "{{ cname }}"
     state: started
     paused: true
@@ -3415,7 +3418,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: paused (continue)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: "/bin/sh -c 'sleep 10m'"
+    command: /bin/sh -c 'sleep 10m'
     name: "{{ cname }}"
     state: started
     paused: false
@@ -3423,7 +3426,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
   register: paused_4
 
 - name: inspect paused
-  command: "docker inspect -f {% raw %}'{{.State.Status}} {{.State.Paused}}'{% endraw %} {{ cname }}"
+  command: docker inspect -f {% raw %}'{{.State.Status}} {{.State.Paused}}'{% endraw %} {{ cname }}
   register: paused_5
 
 - name: cleanup
@@ -3435,11 +3438,11 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - paused_1 is changed
-    - 'paused_2.stdout == "paused true"'
-    - paused_3 is not changed
-    - paused_4 is changed
-    - 'paused_5.stdout == "running false"'
+      - paused_1 is changed
+      - paused_2.stdout == "paused true"
+      - paused_3 is not changed
+      - paused_4 is changed
+      - paused_5.stdout == "running false"
 
 ####################################################################
 ## pid_mode ########################################################
@@ -3448,7 +3451,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: start helpers
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname_h1 }}"
     state: started
   register: pid_mode_helper
@@ -3456,25 +3459,25 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: pid_mode
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
-    pid_mode: "container:{{ pid_mode_helper.container.Id }}"
+    pid_mode: container:{{ pid_mode_helper.container.Id }}
   register: pid_mode_1
 
 - name: pid_mode (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
-    pid_mode: "container:{{ cname_h1 }}"
+    pid_mode: container:{{ cname_h1 }}
   register: pid_mode_2
 
 - name: pid_mode (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     pid_mode: host
@@ -3487,17 +3490,17 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
     state: absent
     force_kill: true
   loop:
-  - "{{ cname }}"
-  - "{{ cname_h1 }}"
+    - "{{ cname }}"
+    - "{{ cname_h1 }}"
   loop_control:
     loop_var: container_name
   diff: false
 
 - assert:
     that:
-    - pid_mode_1 is changed
-    - pid_mode_2 is not changed
-    - pid_mode_3 is changed
+      - pid_mode_1 is changed
+      - pid_mode_2 is not changed
+      - pid_mode_3 is changed
 
 ####################################################################
 ## pids_limit ######################################################
@@ -3506,7 +3509,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: pids_limit
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     pids_limit: 10
@@ -3515,7 +3518,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: pids_limit (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     pids_limit: 10
@@ -3524,7 +3527,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: pids_limit (changed)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     pids_limit: 20
@@ -3540,9 +3543,9 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - pids_limit_1 is changed
-    - pids_limit_2 is not changed
-    - pids_limit_3 is changed
+      - pids_limit_1 is changed
+      - pids_limit_2 is not changed
+      - pids_limit_3 is changed
 
 ####################################################################
 ## platform ########################################################
@@ -3599,15 +3602,15 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - platform_1 is changed
-    - platform_2 is not changed and platform_2 is not failed
-    - platform_3 is changed
+      - platform_1 is changed
+      - platform_2 is not changed and platform_2 is not failed
+      - platform_3 is changed
   when: docker_api_version is version('1.41', '>=')
 - assert:
     that:
-    - platform_1 is failed
-    - |
-      ('API version is ' ~ docker_api_version ~ '.') in platform_1.msg and 'Minimum version required is 1.41 ' in platform_1.msg
+      - platform_1 is failed
+      - |
+        ('API version is ' ~ docker_api_version ~ '.') in platform_1.msg and 'Minimum version required is 1.41 ' in platform_1.msg
   when: docker_api_version is version('1.41', '<')
 
 ####################################################################
@@ -3617,7 +3620,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: privileged
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     privileged: true
     state: started
@@ -3626,7 +3629,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: privileged (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     privileged: true
     state: started
@@ -3635,7 +3638,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: privileged (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     privileged: false
     state: started
@@ -3651,9 +3654,9 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - privileged_1 is changed
-    - privileged_2 is not changed
-    - privileged_3 is changed
+      - privileged_1 is changed
+      - privileged_2 is not changed
+      - privileged_3 is changed
 
 ####################################################################
 ## published_ports and default_host_ip #############################
@@ -3662,76 +3665,76 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: published_ports
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     published_ports:
-    - '9001'
-    - '9002'
+      - "9001"
+      - "9002"
   register: published_ports_1
 
 - name: published_ports (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     published_ports:
-    - '9002'
-    - '9001'
+      - "9002"
+      - "9001"
   register: published_ports_2
 
 - name: published_ports (less published_ports)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     published_ports:
-    - '9002'
+      - "9002"
   register: published_ports_3
 
 - name: published_ports (more published_ports)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     published_ports:
-    - '9002'
-    - '9003'
+      - "9002"
+      - "9003"
     force_kill: true
   register: published_ports_4
 
 - name: published_ports (ports with IP addresses)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     published_ports:
-    - '127.0.0.1:9002:9002/tcp'
-    - '[::1]:9003:9003/tcp'
-    - '[fe80::1%test]:90:90/tcp'
+      - 127.0.0.1:9002:9002/tcp
+      - "[::1]:9003:9003/tcp"
+      - "[fe80::1%test]:90:90/tcp"
     force_kill: true
   register: published_ports_5
 
 - name: published_ports (ports with IP addresses, idempotent)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     published_ports:
-    - '127.0.0.1:9002:9002/tcp'
-    - '[::1]:9003:9003/tcp'
-    - '[fe80::1%test]:90:90/tcp'
+      - 127.0.0.1:9002:9002/tcp
+      - "[::1]:9003:9003/tcp"
+      - "[fe80::1%test]:90:90/tcp"
   register: published_ports_6
 
 - name: published_ports (no published ports)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     published_ports: []
@@ -3743,49 +3746,49 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: published_ports (default_host_ip not set)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     published_ports:
-    - '9001'
-    - '9002'
+      - "9001"
+      - "9002"
     force_kill: true
   register: published_ports_8
 
 - name: published_ports (default_host_ip set to empty string)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     published_ports:
-    - '9002'
-    - '9001'
-    default_host_ip: ''
+      - "9002"
+      - "9001"
+    default_host_ip: ""
     force_kill: true
   register: published_ports_9
 
 - name: published_ports (default_host_ip set to empty string, idempotent)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     published_ports:
-    - '9002'
-    - '9001'
-    default_host_ip: ''
+      - "9002"
+      - "9001"
+    default_host_ip: ""
   register: published_ports_10
 
 - name: published_ports (default_host_ip unset)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     published_ports:
-    - '9002'
-    - '9001'
+      - "9002"
+      - "9001"
     force_kill: true
   register: published_ports_11
 
@@ -3798,17 +3801,17 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - published_ports_1 is changed
-    - published_ports_2 is not changed
-    - published_ports_3 is not changed
-    - published_ports_4 is changed
-    - published_ports_5 is changed
-    - published_ports_6 is not changed
-    - published_ports_7 is changed
-    - published_ports_8 is changed
-    - published_ports_9 is changed
-    - published_ports_10 is not changed
-    - published_ports_11 is changed
+      - published_ports_1 is changed
+      - published_ports_2 is not changed
+      - published_ports_3 is not changed
+      - published_ports_4 is changed
+      - published_ports_5 is changed
+      - published_ports_6 is not changed
+      - published_ports_7 is changed
+      - published_ports_8 is changed
+      - published_ports_9 is changed
+      - published_ports_10 is not changed
+      - published_ports_11 is changed
 
 ####################################################################
 ## pull ############################################################
@@ -3823,7 +3826,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: read_only
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     read_only: true
     state: started
@@ -3832,7 +3835,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: read_only (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     read_only: true
     state: started
@@ -3841,7 +3844,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: read_only (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     read_only: false
     state: started
@@ -3857,9 +3860,9 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - read_only_1 is changed
-    - read_only_2 is not changed
-    - read_only_3 is changed
+      - read_only_1 is changed
+      - read_only_2 is not changed
+      - read_only_3 is changed
 
 ####################################################################
 ## restart_policy ##################################################
@@ -3868,7 +3871,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: restart_policy
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     restart_policy: always
     state: started
@@ -3877,7 +3880,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: restart_policy (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     restart_policy: always
     state: started
@@ -3886,7 +3889,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: restart_policy (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     restart_policy: unless-stopped
     state: started
@@ -3902,9 +3905,9 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - restart_policy_1 is changed
-    - restart_policy_2 is not changed
-    - restart_policy_3 is changed
+      - restart_policy_1 is changed
+      - restart_policy_2 is not changed
+      - restart_policy_3 is changed
 
 ####################################################################
 ## restart_retries #################################################
@@ -3913,7 +3916,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: restart_retries
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     restart_policy: on-failure
     restart_retries: 5
@@ -3923,7 +3926,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: restart_retries (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     restart_policy: on-failure
     restart_retries: 5
@@ -3933,7 +3936,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: restart_retries (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     restart_policy: on-failure
     restart_retries: 2
@@ -3950,9 +3953,9 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - restart_retries_1 is changed
-    - restart_retries_2 is not changed
-    - restart_retries_3 is changed
+      - restart_retries_1 is changed
+      - restart_retries_2 is not changed
+      - restart_retries_3 is changed
 
 ####################################################################
 ## runtime #########################################################
@@ -3961,7 +3964,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: runtime
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     runtime: runc
     state: started
@@ -3970,7 +3973,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: runtime (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     runtime: runc
     state: started
@@ -3985,8 +3988,8 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - runtime_1 is changed
-    - runtime_2 is not changed
+      - runtime_1 is changed
+      - runtime_2 is not changed
 
 ####################################################################
 ## security_opts ###################################################
@@ -4011,44 +4014,44 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: security_opts
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     security_opts:
-    - "label:level:s0:c100,c200"
-    - "no-new-privileges"
+      - label:level:s0:c100,c200
+      - no-new-privileges
   register: security_opts_1
 
 - name: security_opts (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     security_opts:
-    - "no-new-privileges"
-    - "label:level:s0:c100,c200"
+      - no-new-privileges
+      - label:level:s0:c100,c200
   register: security_opts_2
 
 - name: security_opts (less security options)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     security_opts:
-    - "no-new-privileges"
+      - no-new-privileges
   register: security_opts_3
 
 - name: security_opts (more security options)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     security_opts:
-    - "label:disable"
-    - "no-new-privileges"
+      - label:disable
+      - no-new-privileges
     force_kill: true
   register: security_opts_4
 
@@ -4061,10 +4064,10 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - security_opts_1 is changed
-    - security_opts_2 is not changed
-    - security_opts_3 is not changed
-    - security_opts_4 is changed
+      - security_opts_1 is changed
+      - security_opts_2 is not changed
+      - security_opts_3 is not changed
+      - security_opts_4 is changed
 
 ####################################################################
 ## shm_size ########################################################
@@ -4073,7 +4076,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: shm_size
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     shm_size: 96M
     state: started
@@ -4082,7 +4085,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: shm_size (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     shm_size: 96M
     state: started
@@ -4091,7 +4094,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: shm_size (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     shm_size: 75M
     state: started
@@ -4107,9 +4110,9 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - shm_size_1 is changed
-    - shm_size_2 is not changed
-    - shm_size_3 is changed
+      - shm_size_1 is changed
+      - shm_size_2 is not changed
+      - shm_size_3 is changed
 
 ####################################################################
 ## stop_signal #####################################################
@@ -4118,7 +4121,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: stop_signal
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     stop_signal: "30"
     state: started
@@ -4127,7 +4130,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: stop_signal (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     stop_signal: "30"
     state: started
@@ -4136,7 +4139,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: stop_signal (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     stop_signal: "9"
     state: started
@@ -4152,9 +4155,9 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - stop_signal_1 is changed
-    - stop_signal_2 is not changed
-    - stop_signal_3 is changed
+      - stop_signal_1 is changed
+      - stop_signal_2 is not changed
+      - stop_signal_3 is changed
 
 ####################################################################
 ## stop_timeout ####################################################
@@ -4163,7 +4166,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: stop_timeout
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     stop_timeout: 2
     state: started
@@ -4172,7 +4175,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: stop_timeout (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     stop_timeout: 2
     state: started
@@ -4182,7 +4185,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
   # stop_timeout changes are ignored by default
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     stop_timeout: 1
     state: started
@@ -4197,9 +4200,9 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - stop_timeout_1 is changed
-    - stop_timeout_2 is not changed
-    - stop_timeout_3 is not changed
+      - stop_timeout_1 is changed
+      - stop_timeout_2 is not changed
+      - stop_timeout_3 is not changed
 
 ####################################################################
 ## storage_opts ####################################################
@@ -4208,7 +4211,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: storage_opts
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     storage_opts:
       size: 12m
@@ -4219,7 +4222,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: storage_opts (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     storage_opts:
       size: 12m
@@ -4230,7 +4233,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: storage_opts (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     storage_opts:
       size: 24m
@@ -4248,16 +4251,16 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - storage_opts_1 is changed
-    - storage_opts_2 is not failed and storage_opts_2 is not changed
-    - storage_opts_3 is not failed and storage_opts_3 is changed
+      - storage_opts_1 is changed
+      - storage_opts_2 is not failed and storage_opts_2 is not changed
+      - storage_opts_3 is not failed and storage_opts_3 is changed
   when: storage_opts_1 is not failed
 
 - assert:
     that:
-    - "'is supported only for' in storage_opts_1.msg"
-    - storage_opts_2 is failed
-    - storage_opts_3 is failed
+      - "'is supported only for' in storage_opts_1.msg"
+      - storage_opts_2 is failed
+      - storage_opts_3 is failed
   when: storage_opts_1 is failed
 
 ####################################################################
@@ -4277,7 +4280,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: sysctls
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     sysctls:
@@ -4288,7 +4291,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: sysctls (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     sysctls:
@@ -4299,7 +4302,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: sysctls (less sysctls)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     sysctls:
@@ -4309,7 +4312,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: sysctls (more sysctls)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     sysctls:
@@ -4327,10 +4330,10 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - sysctls_1 is changed
-    - sysctls_2 is not changed
-    - sysctls_3 is not changed
-    - sysctls_4 is changed
+      - sysctls_1 is changed
+      - sysctls_2 is not changed
+      - sysctls_3 is not changed
+      - sysctls_4 is changed
 
 ####################################################################
 ## tmpfs ###########################################################
@@ -4339,44 +4342,44 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: tmpfs
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     tmpfs:
-    - "/test1:rw,noexec,nosuid,size=65536k"
-    - "/test2:rw,noexec,nosuid,size=65536k"
+      - /test1:rw,noexec,nosuid,size=65536k
+      - /test2:rw,noexec,nosuid,size=65536k
   register: tmpfs_1
 
 - name: tmpfs (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     tmpfs:
-    - "/test2:rw,noexec,nosuid,size=65536k"
-    - "/test1:rw,noexec,nosuid,size=65536k"
+      - /test2:rw,noexec,nosuid,size=65536k
+      - /test1:rw,noexec,nosuid,size=65536k
   register: tmpfs_2
 
 - name: tmpfs (less tmpfs)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     tmpfs:
-    - "/test1:rw,noexec,nosuid,size=65536k"
+      - /test1:rw,noexec,nosuid,size=65536k
   register: tmpfs_3
 
 - name: tmpfs (more tmpfs)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     tmpfs:
-    - "/test1:rw,noexec,nosuid,size=65536k"
-    - "/test3:rw,noexec,nosuid,size=65536k"
+      - /test1:rw,noexec,nosuid,size=65536k
+      - /test3:rw,noexec,nosuid,size=65536k
     force_kill: true
   register: tmpfs_4
 
@@ -4389,10 +4392,10 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - tmpfs_1 is changed
-    - tmpfs_2 is not changed
-    - tmpfs_3 is not changed
-    - tmpfs_4 is changed
+      - tmpfs_1 is changed
+      - tmpfs_2 is not changed
+      - tmpfs_3 is not changed
+      - tmpfs_4 is changed
 
 ####################################################################
 ## tty #############################################################
@@ -4401,7 +4404,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: tty
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     tty: true
     state: started
@@ -4411,7 +4414,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: tty (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     tty: true
     state: started
@@ -4421,7 +4424,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: tty (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     tty: false
     state: started
@@ -4438,15 +4441,15 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - tty_1 is changed
-    - tty_2 is not changed and tty_2 is not failed
-    - tty_3 is changed
+      - tty_1 is changed
+      - tty_2 is not changed and tty_2 is not failed
+      - tty_3 is changed
   when: tty_1 is not failed
 
 - assert:
     that:
-    - "'error during container init: open /dev/pts/' in tty_1.msg"
-    - "': operation not permitted: ' in tty_1.msg"
+      - "'error during container init: open /dev/pts/' in tty_1.msg"
+      - "': operation not permitted: ' in tty_1.msg"
   when: tty_1 is failed
 
 ####################################################################
@@ -4456,44 +4459,44 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: ulimits
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     ulimits:
-    - "nofile:1234:1234"
-    - "nproc:3:6"
+      - nofile:1234:1234
+      - nproc:3:6
   register: ulimits_1
 
 - name: ulimits (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     ulimits:
-    - "nproc:3:6"
-    - "nofile:1234:1234"
+      - nproc:3:6
+      - nofile:1234:1234
   register: ulimits_2
 
 - name: ulimits (less ulimits)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     ulimits:
-    - "nofile:1234:1234"
+      - nofile:1234:1234
   register: ulimits_3
 
 - name: ulimits (more ulimits)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     ulimits:
-    - "nofile:1234:1234"
-    - "sigpending:100:200"
+      - nofile:1234:1234
+      - sigpending:100:200
     force_kill: true
   register: ulimits_4
 
@@ -4506,10 +4509,10 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - ulimits_1 is changed
-    - ulimits_2 is not changed
-    - ulimits_3 is not changed
-    - ulimits_4 is changed
+      - ulimits_1 is changed
+      - ulimits_2 is not changed
+      - ulimits_3 is not changed
+      - ulimits_4 is changed
 
 ####################################################################
 ## user ############################################################
@@ -4518,7 +4521,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: user
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     user: nobody
     state: started
@@ -4527,7 +4530,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: user (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     user: nobody
     state: started
@@ -4536,7 +4539,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: user (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     user: root
     state: started
@@ -4552,9 +4555,9 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - user_1 is changed
-    - user_2 is not changed
-    - user_3 is changed
+      - user_1 is changed
+      - user_2 is not changed
+      - user_3 is changed
 
 ####################################################################
 ## userns_mode #####################################################
@@ -4563,7 +4566,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: userns_mode
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     userns_mode: host
     state: started
@@ -4572,7 +4575,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: userns_mode (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     userns_mode: host
     state: started
@@ -4581,7 +4584,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: userns_mode (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     userns_mode: ""
     state: started
@@ -4597,9 +4600,9 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - userns_mode_1 is changed
-    - userns_mode_2 is not changed
-    - userns_mode_3 is changed
+      - userns_mode_1 is changed
+      - userns_mode_2 is not changed
+      - userns_mode_3 is changed
 
 ####################################################################
 ## uts #############################################################
@@ -4608,7 +4611,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: uts
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     uts: host
     state: started
@@ -4617,7 +4620,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: uts (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     uts: host
     state: started
@@ -4626,7 +4629,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: uts (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     uts: ""
     state: started
@@ -4642,9 +4645,9 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - uts_1 is changed
-    - uts_2 is not changed
-    - uts_3 is changed
+      - uts_1 is changed
+      - uts_2 is not changed
+      - uts_3 is changed
 
 ####################################################################
 ## working_dir #####################################################
@@ -4653,7 +4656,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: working_dir
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     working_dir: /tmp
     state: started
@@ -4662,7 +4665,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: working_dir (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     working_dir: /tmp
     state: started
@@ -4671,7 +4674,7 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 - name: working_dir (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     working_dir: /
     state: started
@@ -4687,9 +4690,9 @@ avoid such warnings, please quote the value.' in (log_options_2.warnings | defau
 
 - assert:
     that:
-    - working_dir_1 is changed
-    - working_dir_2 is not changed
-    - working_dir_3 is changed
+      - working_dir_1 is changed
+      - working_dir_2 is not changed
+      - working_dir_3 is changed
 
 ####################################################################
 ####################################################################

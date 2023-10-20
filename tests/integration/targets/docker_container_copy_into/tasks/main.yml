@@ -10,7 +10,7 @@
 
 - name: Gather facts on controller
   setup:
-    gather_subset: '!all'
+    gather_subset: "!all"
   delegate_to: localhost
   delegate_facts: true
   run_once: true
@@ -22,22 +22,22 @@
     cnames: []
 
 - debug:
-    msg: "Using container name prefix {{ cname_prefix }}"
+    msg: Using container name prefix {{ cname_prefix }}
 
 # Run the tests
 - block:
-  - include_tasks: run-test.yml
-    with_fileglob:
-    - "tests/*.yml"
+    - include_tasks: run-test.yml
+      with_fileglob:
+        - tests/*.yml
 
   always:
-  - name: "Make sure all containers are removed"
-    docker_container:
-      name: "{{ item }}"
-      state: absent
-      force_kill: true
-    with_items: "{{ cnames }}"
-    diff: false
+    - name: Make sure all containers are removed
+      docker_container:
+        name: "{{ item }}"
+        state: absent
+        force_kill: true
+      with_items: "{{ cnames }}"
+      diff: false
 
   when: docker_api_version is version('1.25', '>=')
 

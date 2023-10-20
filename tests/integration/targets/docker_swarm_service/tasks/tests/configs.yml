@@ -16,24 +16,24 @@
 
 - docker_config:
     name: "{{ config_name_1 }}"
-    data: "hello"
+    data: hello
     state: present
-  register: "config_result_1"
+  register: config_result_1
   when: docker_api_version is version('1.30', '>=') and docker_py_version is version('2.6.0', '>=')
 
 - docker_config:
     name: "{{ config_name_2 }}"
-    data: "test"
+    data: test
     state: present
-  register: "config_result_2"
+  register: config_result_2
   when: docker_api_version is version('1.30', '>=') and docker_py_version is version('2.6.0', '>=')
 
 - docker_config:
     name: "{{ config_name_3 }}"
-    data: "config3"
+    data: config3
     state: present
     rolling_versions: true
-  register: "config_result_3"
+  register: config_result_3
   when: docker_api_version is version('1.30', '>=') and docker_py_version is version('2.6.0', '>=')
 
 ####################################################################
@@ -45,11 +45,11 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     configs:
       - config_id: "{{ config_result_1.config_id|default('') }}"
         config_name: "{{ config_name_1 }}"
-        filename: "/tmp/{{ config_name_1 }}.txt"
+        filename: /tmp/{{ config_name_1 }}.txt
   register: configs_1
   ignore_errors: true
 
@@ -58,10 +58,10 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     configs:
       - config_name: "{{ config_name_1 }}"
-        filename: "/tmp/{{ config_name_1 }}.txt"
+        filename: /tmp/{{ config_name_1 }}.txt
   register: configs_2
   ignore_errors: true
 
@@ -70,13 +70,13 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     configs:
       - config_id: "{{ config_result_1.config_id|default('') }}"
         config_name: "{{ config_name_1 }}"
-        filename: "/tmp/{{ config_name_1 }}.txt"
+        filename: /tmp/{{ config_name_1 }}.txt
       - config_name: "{{ config_name_2 }}"
-        filename: "/tmp/{{ config_name_2 }}.txt"
+        filename: /tmp/{{ config_name_2 }}.txt
   register: configs_3
   ignore_errors: true
 
@@ -85,13 +85,13 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     configs:
       - config_name: "{{ config_name_1 }}"
-        filename: "/tmp/{{ config_name_1 }}.txt"
+        filename: /tmp/{{ config_name_1 }}.txt
       - config_id: "{{ config_result_2.config_id|default('') }}"
         config_name: "{{ config_name_2 }}"
-        filename: "/tmp/{{ config_name_2 }}.txt"
+        filename: /tmp/{{ config_name_2 }}.txt
   register: configs_4
   ignore_errors: true
 
@@ -100,12 +100,12 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     configs:
       - config_name: "{{ config_name_1 }}"
-        filename: "/tmp/{{ config_name_1 }}.txt"
+        filename: /tmp/{{ config_name_1 }}.txt
       - config_name: "{{ config_name_2 }}"
-        filename: "/tmp/{{ config_name_2 }}.txt"
+        filename: /tmp/{{ config_name_2 }}.txt
   register: configs_5
   ignore_errors: true
 
@@ -114,12 +114,12 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     configs:
       - config_name: "{{ config_name_2 }}"
-        filename: "/tmp/{{ config_name_2 }}.txt"
+        filename: /tmp/{{ config_name_2 }}.txt
       - config_name: "{{ config_name_1 }}"
-        filename: "/tmp/{{ config_name_1 }}.txt"
+        filename: /tmp/{{ config_name_1 }}.txt
   register: configs_6
   ignore_errors: true
 
@@ -128,7 +128,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     configs: []
   register: configs_7
   ignore_errors: true
@@ -138,7 +138,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     configs: []
   register: configs_8
   ignore_errors: true
@@ -148,18 +148,18 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     configs:
       - config_name: "{{ config_name_3 }}_v1"
-        filename: "/run/configs/{{ config_name_3 }}.txt"
+        filename: /run/configs/{{ config_name_3 }}.txt
   register: configs_9
   ignore_errors: true
 
 - name: update rolling config
   docker_config:
     name: "{{ config_name_3 }}"
-    data: "newconfig3"
-    state: "present"
+    data: newconfig3
+    state: present
     rolling_versions: true
   register: configs_10
   when: docker_api_version is version('1.30', '>=') and docker_py_version is version('2.6.0', '>=')
@@ -170,10 +170,10 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     configs:
       - config_name: "{{ config_name_3 }}_v2"
-        filename: "/run/configs/{{ config_name_3 }}.txt"
+        filename: /run/configs/{{ config_name_3 }}.txt
   register: configs_11
   ignore_errors: true
 
@@ -185,23 +185,23 @@
 
 - assert:
     that:
-    - configs_1 is changed
-    - configs_2 is not changed
-    - configs_3 is changed
-    - configs_4 is not changed
-    - configs_5 is not changed
-    - configs_6 is not changed
-    - configs_7 is changed
-    - configs_8 is not changed
-    - configs_9 is changed
-    - configs_10 is not failed
-    - configs_11 is changed
+      - configs_1 is changed
+      - configs_2 is not changed
+      - configs_3 is changed
+      - configs_4 is not changed
+      - configs_5 is not changed
+      - configs_6 is not changed
+      - configs_7 is changed
+      - configs_8 is not changed
+      - configs_9 is changed
+      - configs_10 is not failed
+      - configs_11 is changed
   when: docker_api_version is version('1.30', '>=') and docker_py_version is version('2.6.0', '>=')
 
 - assert:
     that:
-    - configs_1 is failed
-    - "'Minimum version required' in configs_1.msg"
+      - configs_1 is failed
+      - "'Minimum version required' in configs_1.msg"
   when: docker_api_version is version('1.30', '<') or docker_py_version is version('2.6.0', '<')
 
 ####################################################################
@@ -213,24 +213,24 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     configs:
       - config_id: "{{ config_result_1.config_id|default('') }}"
         config_name: "{{ config_name_1 }}"
-        uid: 1000        
+        uid: 1000
   register: configs_1
   ignore_errors: true
-  
+
 - name: configs (uid int idempotency)
   docker_swarm_service:
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     configs:
       - config_id: "{{ config_result_1.config_id|default('') }}"
         config_name: "{{ config_name_1 }}"
-        uid: 1000        
+        uid: 1000
   register: configs_2
   ignore_errors: true
 
@@ -239,20 +239,20 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     configs:
       - config_id: "{{ config_result_1.config_id|default('') }}"
         config_name: "{{ config_name_1 }}"
-        uid: 1002      
+        uid: 1002
   register: configs_3
   ignore_errors: true
-  
+
 - name: configs (uid str)
   docker_swarm_service:
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     configs:
       - config_id: "{{ config_result_1.config_id|default('') }}"
         config_name: "{{ config_name_1 }}"
@@ -265,7 +265,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     configs:
       - config_id: "{{ config_result_1.config_id|default('') }}"
         config_name: "{{ config_name_1 }}"
@@ -280,19 +280,18 @@
   diff: false
 - assert:
     that:
-    - configs_1 is changed
-    - configs_2 is not changed
-    - configs_3 is changed
-    - configs_4 is changed
-    - configs_5 is not changed
+      - configs_1 is changed
+      - configs_2 is not changed
+      - configs_3 is changed
+      - configs_4 is changed
+      - configs_5 is not changed
   when: docker_api_version is version('1.30', '>=') and docker_py_version is version('2.6.0', '>=')
 
 - assert:
     that:
-    - configs_1 is failed
-    - "'Minimum version required' in configs_1.msg"
+      - configs_1 is failed
+      - "'Minimum version required' in configs_1.msg"
   when: docker_api_version is version('1.30', '<') or docker_py_version is version('2.6.0', '<')
-
 
 ####################################################################
 ## configs (gid) ###################################################
@@ -303,24 +302,24 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     configs:
       - config_id: "{{ config_result_1.config_id|default('') }}"
         config_name: "{{ config_name_1 }}"
-        gid: 1000        
+        gid: 1000
   register: configs_1
   ignore_errors: true
-  
+
 - name: configs (gid int idempotency)
   docker_swarm_service:
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     configs:
       - config_id: "{{ config_result_1.config_id|default('') }}"
         config_name: "{{ config_name_1 }}"
-        gid: 1000        
+        gid: 1000
   register: configs_2
   ignore_errors: true
 
@@ -329,20 +328,20 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     configs:
       - config_id: "{{ config_result_1.config_id|default('') }}"
         config_name: "{{ config_name_1 }}"
-        gid: 1002      
+        gid: 1002
   register: configs_3
   ignore_errors: true
-  
+
 - name: configs (gid str)
   docker_swarm_service:
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     configs:
       - config_id: "{{ config_result_1.config_id|default('') }}"
         config_name: "{{ config_name_1 }}"
@@ -355,7 +354,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     configs:
       - config_id: "{{ config_result_1.config_id|default('') }}"
         config_name: "{{ config_name_1 }}"
@@ -370,17 +369,17 @@
   diff: false
 - assert:
     that:
-    - configs_1 is changed
-    - configs_2 is not changed
-    - configs_3 is changed
-    - configs_4 is changed
-    - configs_5 is not changed
+      - configs_1 is changed
+      - configs_2 is not changed
+      - configs_3 is changed
+      - configs_4 is changed
+      - configs_5 is not changed
   when: docker_api_version is version('1.30', '>=') and docker_py_version is version('2.6.0', '>=')
 
 - assert:
     that:
-    - configs_1 is failed
-    - "'Minimum version required' in configs_1.msg"
+      - configs_1 is failed
+      - "'Minimum version required' in configs_1.msg"
   when: docker_api_version is version('1.30', '<') or docker_py_version is version('2.6.0', '<')
 
 ####################################################################
@@ -392,11 +391,11 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     configs:
       - config_id: "{{ config_result_1.config_id|default('') }}"
         config_name: "{{ config_name_1 }}"
-        mode: 0600
+        mode: "0600"
   register: configs_1
   ignore_errors: true
 
@@ -405,11 +404,11 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     configs:
       - config_id: "{{ config_result_1.config_id|default('') }}"
         config_name: "{{ config_name_1 }}"
-        mode: 0600
+        mode: "0600"
   register: configs_2
   ignore_errors: true
 
@@ -418,11 +417,11 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     configs:
       - config_id: "{{ config_result_1.config_id|default('') }}"
         config_name: "{{ config_name_1 }}"
-        mode: 0777
+        mode: "0777"
   register: configs_3
   ignore_errors: true
 
@@ -433,15 +432,15 @@
   diff: false
 - assert:
     that:
-    - configs_1 is changed
-    - configs_2 is not changed
-    - configs_3 is changed
+      - configs_1 is changed
+      - configs_2 is not changed
+      - configs_3 is changed
   when: docker_api_version is version('1.30', '>=') and docker_py_version is version('2.6.0', '>=')
 
 - assert:
     that:
-    - configs_1 is failed
-    - "'Minimum version required' in configs_1.msg"
+      - configs_1 is failed
+      - "'Minimum version required' in configs_1.msg"
   when: docker_api_version is version('1.30', '<') or docker_py_version is version('2.6.0', '<')
 
 ####################################################################

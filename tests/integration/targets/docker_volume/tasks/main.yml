@@ -14,19 +14,19 @@
     vnames: []
 
 - debug:
-    msg: "Using name prefix {{ name_prefix }}"
+    msg: Using name prefix {{ name_prefix }}
 
 - block:
-  - include_tasks: run-test.yml
-    with_fileglob:
-    - "tests/*.yml"
+    - include_tasks: run-test.yml
+      with_fileglob:
+        - tests/*.yml
 
   always:
-  - name: "Make sure all volumes are removed"
-    docker_volume:
-      name: "{{ item }}"
-      state: absent
-    with_items: "{{ vnames }}"
+    - name: Make sure all volumes are removed
+      docker_volume:
+        name: "{{ item }}"
+        state: absent
+      with_items: "{{ vnames }}"
 
   when: docker_api_version is version('1.25', '>=')
 

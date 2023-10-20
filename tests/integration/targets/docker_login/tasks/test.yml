@@ -4,9 +4,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 - block:
-  - include_tasks: run-test.yml
-    with_fileglob:
-    - "tests/*.yml"
+    - include_tasks: run-test.yml
+      with_fileglob:
+        - tests/*.yml
   when: docker_api_version is version('1.25', '>=')
 
 - fail: msg="Too old docker / docker-py version to run docker_image tests!"

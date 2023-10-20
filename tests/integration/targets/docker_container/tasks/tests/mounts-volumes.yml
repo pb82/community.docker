@@ -25,95 +25,95 @@
 - name: mounts
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     mounts:
-    - source: /tmp
-      target: /tmp
-      type: bind
-    - source: /
-      target: /whatever
-      type: bind
-      read_only: false
+      - source: /tmp
+        target: /tmp
+        type: bind
+      - source: /
+        target: /whatever
+        type: bind
+        read_only: false
   register: mounts_1
 
 - name: mounts (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     mounts:
-    - source: /
-      target: /whatever
-      type: bind
-      read_only: false
-    - source: /tmp
-      target: /tmp
-      type: bind
+      - source: /
+        target: /whatever
+        type: bind
+        read_only: false
+      - source: /tmp
+        target: /tmp
+        type: bind
   register: mounts_2
 
 - name: mounts (less mounts)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     mounts:
-    - source: /tmp
-      target: /tmp
-      type: bind
+      - source: /tmp
+        target: /tmp
+        type: bind
   register: mounts_3
 
 - name: mounts (more mounts)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     mounts:
-    - source: /tmp
-      target: /tmp
-      type: bind
-    - source: /tmp
-      target: /somewhereelse
-      type: bind
-      read_only: true
+      - source: /tmp
+        target: /tmp
+        type: bind
+      - source: /tmp
+        target: /somewhereelse
+        type: bind
+        read_only: true
     force_kill: true
   register: mounts_4
 
 - name: mounts (different modes)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     mounts:
-    - source: /tmp
-      target: /tmp
-      type: bind
-    - source: /tmp
-      target: /somewhereelse
-      type: bind
-      read_only: false
+      - source: /tmp
+        target: /tmp
+        type: bind
+      - source: /tmp
+        target: /somewhereelse
+        type: bind
+        read_only: false
     force_kill: true
   register: mounts_5
 
 - name: mounts (endpoint collision)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     mounts:
-    - source: /home
-      target: /x
-      type: bind
-    - source: /etc
-      target: /x
-      type: bind
-      read_only: false
+      - source: /home
+        target: /x
+        type: bind
+      - source: /etc
+        target: /x
+        type: bind
+        read_only: false
     force_kill: true
   register: mounts_6
   ignore_errors: true
@@ -121,7 +121,7 @@
 - name: mounts (anonymous volume)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     mounts:
@@ -133,7 +133,7 @@
 - name: mounts (anonymous volume idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     mounts:
@@ -151,15 +151,15 @@
 
 - assert:
     that:
-    - mounts_1 is changed
-    - mounts_2 is not changed
-    - mounts_3 is not changed
-    - mounts_4 is changed
-    - mounts_5 is changed
-    - mounts_6 is failed
-    - "'The mount point \"/x\" appears twice in the mounts option' == mounts_6.msg"
-    - mounts_7 is changed
-    - mounts_8 is not changed
+      - mounts_1 is changed
+      - mounts_2 is not changed
+      - mounts_3 is not changed
+      - mounts_4 is changed
+      - mounts_5 is changed
+      - mounts_6 is failed
+      - "'The mount point \"/x\" appears twice in the mounts option' == mounts_6.msg"
+      - mounts_7 is changed
+      - mounts_8 is not changed
 
 ####################################################################
 ## tmpfs ###########################################################
@@ -168,86 +168,86 @@
 - name: tmpfs
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     mounts:
-    - target: /cache1
-      type: tmpfs
-      tmpfs_mode: "1777"
-      tmpfs_size: "1GB"
-    - target: /cache2
-      type: tmpfs
-      tmpfs_mode: "1777"
-      tmpfs_size: "1GB"
+      - target: /cache1
+        type: tmpfs
+        tmpfs_mode: "1777"
+        tmpfs_size: 1GB
+      - target: /cache2
+        type: tmpfs
+        tmpfs_mode: "1777"
+        tmpfs_size: 1GB
     force_kill: true
   register: tmpfs_1
 
 - name: tmpfs (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     mounts:
-    - target: /cache2
-      type: tmpfs
-      tmpfs_mode: "1777"
-      tmpfs_size: "1GB"
-    - target: /cache1
-      type: tmpfs
-      tmpfs_mode: "1777"
-      tmpfs_size: "1GB"
+      - target: /cache2
+        type: tmpfs
+        tmpfs_mode: "1777"
+        tmpfs_size: 1GB
+      - target: /cache1
+        type: tmpfs
+        tmpfs_mode: "1777"
+        tmpfs_size: 1GB
     force_kill: true
   register: tmpfs_2
 
 - name: tmpfs (more mounts)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     mounts:
-    - target: /cache1
-      type: tmpfs
-      tmpfs_mode: "1777"
-      tmpfs_size: "1GB"
-    - target: /cache2
-      type: tmpfs
-      tmpfs_mode: "1777"
-      tmpfs_size: "1GB"
-    - target: /cache3
-      type: tmpfs
-      tmpfs_mode: "1777"
-      tmpfs_size: "1GB"
+      - target: /cache1
+        type: tmpfs
+        tmpfs_mode: "1777"
+        tmpfs_size: 1GB
+      - target: /cache2
+        type: tmpfs
+        tmpfs_mode: "1777"
+        tmpfs_size: 1GB
+      - target: /cache3
+        type: tmpfs
+        tmpfs_mode: "1777"
+        tmpfs_size: 1GB
     force_kill: true
   register: tmpfs_3
 
 - name: tmpfs (change mode)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     mounts:
-    - target: /cache1
-      type: tmpfs
-      tmpfs_mode: "1700"
-      tmpfs_size: "1GB"
+      - target: /cache1
+        type: tmpfs
+        tmpfs_mode: "1700"
+        tmpfs_size: 1GB
     force_kill: true
   register: tmpfs_4
 
 - name: tmpfs (change size)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     mounts:
-    - target: /cache1
-      type: tmpfs
-      tmpfs_mode: "1700"
-      tmpfs_size: "2GB"
+      - target: /cache1
+        type: tmpfs
+        tmpfs_mode: "1700"
+        tmpfs_size: 2GB
     force_kill: true
   register: tmpfs_5
 
@@ -260,11 +260,11 @@
 
 - assert:
     that:
-    - tmpfs_1 is changed
-    - tmpfs_2 is not changed
-    - tmpfs_3 is changed
-    - tmpfs_4 is changed
-    - tmpfs_5 is changed
+      - tmpfs_1 is changed
+      - tmpfs_2 is not changed
+      - tmpfs_3 is changed
+      - tmpfs_4 is changed
+      - tmpfs_5 is changed
 
 ####################################################################
 ## mounts + volumes ################################################
@@ -273,62 +273,62 @@
 - name: mounts + volumes
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     mounts:
-    - source: /
-      target: /whatever
-      type: bind
-      read_only: true
+      - source: /
+        target: /whatever
+        type: bind
+        read_only: true
     volumes:
-    - /tmp:/tmp
+      - /tmp:/tmp
   register: mounts_volumes_1
 
 - name: mounts + volumes (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     mounts:
-    - source: /
-      target: /whatever
-      type: bind
-      read_only: true
+      - source: /
+        target: /whatever
+        type: bind
+        read_only: true
     volumes:
-    - /tmp:/tmp
+      - /tmp:/tmp
   register: mounts_volumes_2
 
 - name: mounts + volumes (switching)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     mounts:
-    - source: /tmp
-      target: /tmp
-      type: bind
-      read_only: false
+      - source: /tmp
+        target: /tmp
+        type: bind
+        read_only: false
     volumes:
-    - /:/whatever:ro
+      - /:/whatever:ro
     force_kill: true
   register: mounts_volumes_3
 
 - name: mounts + volumes (collision, should fail)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     mounts:
-    - source: /tmp
-      target: /tmp
-      type: bind
-      read_only: false
+      - source: /tmp
+        target: /tmp
+        type: bind
+        read_only: false
     volumes:
-    - /tmp:/tmp
+      - /tmp:/tmp
     force_kill: true
   register: mounts_volumes_4
   ignore_errors: true
@@ -342,11 +342,11 @@
 
 - assert:
     that:
-    - mounts_volumes_1 is changed
-    - mounts_volumes_2 is not changed
-    - mounts_volumes_3 is changed
-    - mounts_volumes_4 is failed
-    - "'The mount point \"/tmp\" appears both in the volumes and mounts option' in mounts_volumes_4.msg"
+      - mounts_volumes_1 is changed
+      - mounts_volumes_2 is not changed
+      - mounts_volumes_3 is changed
+      - mounts_volumes_4 is failed
+      - "'The mount point \"/tmp\" appears both in the volumes and mounts option' in mounts_volumes_4.msg"
 
 ####################################################################
 ## volume_driver ###################################################
@@ -355,7 +355,7 @@
 - name: volume_driver
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     volume_driver: local
     state: started
@@ -364,7 +364,7 @@
 - name: volume_driver (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     volume_driver: local
     state: started
@@ -373,7 +373,7 @@
 - name: volume_driver (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     volume_driver: /
     state: started
@@ -389,9 +389,9 @@
 
 - assert:
     that:
-    - volume_driver_1 is changed
-    - volume_driver_2 is not changed
-    - volume_driver_3 is changed
+      - volume_driver_1 is changed
+      - volume_driver_2 is not changed
+      - volume_driver_3 is changed
 
 ####################################################################
 ## volumes #########################################################
@@ -400,70 +400,70 @@
 - name: volumes
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     volumes:
-    - "/tmp:/tmp"
-    - "/:/whatever:rw,z"
-    - "/anon:rw"
+      - /tmp:/tmp
+      - /:/whatever:rw,z
+      - /anon:rw
   register: volumes_1
 
 - name: volumes (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     volumes:
-    - "/:/whatever:rw,z"
-    - "/tmp:/tmp"
-    - "/anon:rw"
+      - /:/whatever:rw,z
+      - /tmp:/tmp
+      - /anon:rw
   register: volumes_2
 
 - name: volumes (less volumes)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     volumes:
-    - "/tmp:/tmp"
+      - /tmp:/tmp
   register: volumes_3
 
 - name: volumes (more volumes)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     volumes:
-    - "/tmp:/tmp"
-    - "/tmp:/somewhereelse:ro,Z"
+      - /tmp:/tmp
+      - /tmp:/somewhereelse:ro,Z
     force_kill: true
   register: volumes_4
 
 - name: volumes (different modes)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     volumes:
-    - "/tmp:/tmp"
-    - "/tmp:/somewhereelse:ro"
+      - /tmp:/tmp
+      - /tmp:/somewhereelse:ro
     force_kill: true
   register: volumes_5
 
 - name: volumes (collision)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     volumes:
-    - "/etc:/tmp"
-    - "/home:/tmp:ro"
+      - /etc:/tmp
+      - /home:/tmp:ro
     force_kill: true
   register: volumes_6
   ignore_errors: true
@@ -477,16 +477,16 @@
 
 - assert:
     that:
-    - volumes_1 is changed
-    - volumes_1.container.Config.Volumes | length == 1
-    - volumes_1.container.Config.Volumes['/anon:rw'] | length == 0
-    - volumes_2 is not changed
-    - volumes_3 is not changed
-    - volumes_4 is changed
-    - not volumes_4.container.Config.Volumes
-    - volumes_5 is changed
-    - volumes_6 is failed
-    - "'The mount point \"/tmp\" appears twice in the volumes option' in volumes_6.msg"
+      - volumes_1 is changed
+      - volumes_1.container.Config.Volumes | length == 1
+      - volumes_1.container.Config.Volumes['/anon:rw'] | length == 0
+      - volumes_2 is not changed
+      - volumes_3 is not changed
+      - volumes_4 is changed
+      - not volumes_4.container.Config.Volumes
+      - volumes_5 is changed
+      - volumes_6 is failed
+      - "'The mount point \"/tmp\" appears twice in the volumes option' in volumes_6.msg"
 
 ####################################################################
 ## volumes_from ####################################################
@@ -495,21 +495,21 @@
 - name: start helpers
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ container_name }}"
     state: started
     volumes:
-    - "{{ '/tmp:/tmp' if container_name == cname_h1 else '/:/whatever:ro' }}"
+      - "{{ '/tmp:/tmp' if container_name == cname_h1 else '/:/whatever:ro' }}"
   loop:
-  - "{{ cname_h1 }}"
-  - "{{ cname_h2 }}"
+    - "{{ cname_h1 }}"
+    - "{{ cname_h2 }}"
   loop_control:
     loop_var: container_name
 
 - name: volumes_from
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     volumes_from: "{{ cname_h1 }}"
@@ -518,7 +518,7 @@
 - name: volumes_from (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     volumes_from: "{{ cname_h1 }}"
@@ -527,7 +527,7 @@
 - name: volumes_from (change)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     volumes_from: "{{ cname_h2 }}"
@@ -540,18 +540,18 @@
     state: absent
     force_kill: true
   loop:
-  - "{{ cname }}"
-  - "{{ cname_h1 }}"
-  - "{{ cname_h2 }}"
+    - "{{ cname }}"
+    - "{{ cname_h1 }}"
+    - "{{ cname_h2 }}"
   loop_control:
     loop_var: container_name
   diff: false
 
 - assert:
     that:
-    - volumes_from_1 is changed
-    - volumes_from_2 is not changed
-    - volumes_from_3 is changed
+      - volumes_from_1 is changed
+      - volumes_from_2 is not changed
+      - volumes_from_3 is changed
 
 ####################################################################
 ####################################################################

@@ -18,7 +18,7 @@
         name: "{{ item.name }}"
         image: "{{ docker_test_image_alpine }}"
         state: started
-        command: '/bin/sh -c "sleep 10m"'
+        command: /bin/sh -c "sleep 10m"
         published_ports:
           - 22/tcp
       loop:

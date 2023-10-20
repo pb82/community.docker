@@ -20,7 +20,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     logging:
       driver: json-file
   register: logging_driver_1
@@ -30,7 +30,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     logging:
       driver: json-file
   register: logging_driver_2
@@ -40,7 +40,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     logging:
       driver: syslog
   register: logging_driver_3
@@ -66,7 +66,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     logging:
       driver: json-file
       options:
@@ -79,7 +79,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     logging:
       driver: json-file
       options:
@@ -92,7 +92,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     logging:
       driver: json-file
       options:
@@ -106,7 +106,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     logging:
       driver: json-file
       options: {}
@@ -117,7 +117,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     logging:
       driver: json-file
       options: {}

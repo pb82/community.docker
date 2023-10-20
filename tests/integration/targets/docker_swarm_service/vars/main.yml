@@ -4,57 +4,57 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 service_expected_output:
-  args: [sleep, '1800']
-  cap_add: null
-  cap_drop: null
-  configs: null
-  constraints: null
-  container_labels: null
-  command: null
-  dns: null
-  dns_options: null
-  dns_search: null
+  args: [sleep, "1800"]
+  cap_add:
+  cap_drop:
+  configs:
+  constraints:
+  container_labels:
+  command:
+  dns:
+  dns_options:
+  dns_search:
   endpoint_mode: vip
-  env: null
-  force_update: null
-  groups: null
-  healthcheck: null
-  healthcheck_disabled: null
-  hostname: null
-  hosts: null
+  env:
+  force_update:
+  groups:
+  healthcheck:
+  healthcheck_disabled:
+  hostname:
+  hosts:
   image: "{{ docker_test_image_busybox }}"
-  labels: null
-  limit_cpu: null
-  limit_memory: null
-  log_driver: null
-  log_driver_options: null
+  labels:
+  limit_cpu:
+  limit_memory:
+  log_driver:
+  log_driver_options:
   mode: global
-  mounts: null
-  networks: null
-  secrets: null
-  stop_grace_period: null
-  stop_signal: null
-  placement_preferences: null
+  mounts:
+  networks:
+  secrets:
+  stop_grace_period:
+  stop_signal:
+  placement_preferences:
   publish:
-    - {mode: null, protocol: tcp, published_port: 60001, target_port: 60001}
-    - {mode: null, protocol: udp, published_port: 60001, target_port: 60001}
-  read_only: null
-  replicas: null
-  replicas_max_per_node: null
-  reserve_cpu: null
-  reserve_memory: null
-  restart_policy: null
-  restart_policy_attempts: null
-  restart_policy_delay: null
-  restart_policy_window: null
-  rollback_config: null
-  tty: null
-  update_delay: null
-  update_failure_action: null
-  update_max_failure_ratio: null
-  update_monitor: null
-  update_order: null
-  update_parallelism: null
-  user: null
-  working_dir: null
-  init: null
+    - { mode: !!null "", protocol: tcp, published_port: 60001, target_port: 60001 }
+    - { mode: !!null "", protocol: udp, published_port: 60001, target_port: 60001 }
+  read_only:
+  replicas:
+  replicas_max_per_node:
+  reserve_cpu:
+  reserve_memory:
+  restart_policy:
+  restart_policy_attempts:
+  restart_policy_delay:
+  restart_policy_window:
+  rollback_config:
+  tty:
+  update_delay:
+  update_failure_action:
+  update_max_failure_ratio:
+  update_monitor:
+  update_order:
+  update_parallelism:
+  user:
+  working_dir:
+  init:

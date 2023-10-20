@@ -16,7 +16,7 @@
 
 - docker_network:
     name: "{{ network_name }}"
-    driver: "overlay"
+    driver: overlay
     state: present
   loop:
     - "{{ network_name_1 }}"
@@ -33,7 +33,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - "{{ network_name_1 }}"
   register: networks_1
@@ -43,7 +43,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - "{{ network_name_1 }}"
   register: networks_2
@@ -53,7 +53,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - name: "{{ network_name_1 }}"
   register: networks_3
@@ -63,7 +63,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - "{{ network_name_1 }}"
       - "{{ network_name_2 }}"
@@ -74,7 +74,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - "{{ network_name_1 }}"
       - "{{ network_name_2 }}"
@@ -85,7 +85,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - name: "{{ network_name_1 }}"
       - name: "{{ network_name_2 }}"
@@ -96,7 +96,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - name: "{{ network_name_1 }}"
       - "{{ network_name_2 }}"
@@ -107,7 +107,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - "{{ network_name_2 }}"
       - name: "{{ network_name_1 }}"
@@ -118,7 +118,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - "{{ network_name_2 }}"
   register: networks_9
@@ -128,7 +128,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - "{{ network_name_2 }}"
   register: networks_10
@@ -138,7 +138,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks: []
   register: networks_11
 
@@ -147,7 +147,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks: []
   register: networks_12
 
@@ -156,9 +156,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
-      - "idonotexist"
+      - idonotexist
   register: networks_13
   ignore_errors: true
 
@@ -167,9 +167,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
-      - foo: "bar"
+      - foo: bar
   register: networks_14
   ignore_errors: true
 
@@ -178,7 +178,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - [1, 2, 3]
   register: networks_15
@@ -205,7 +205,7 @@
       - networks_11 is changed
       - networks_12 is not changed
       - networks_13 is failed
-      - '"Could not find a network named: ''idonotexist''" in networks_13.msg'
+      - "\"Could not find a network named: 'idonotexist'\" in networks_13.msg"
       - networks_14 is failed
       - "'\"name\" is required when networks are passed as dictionaries.' in networks_14.msg"
       - networks_15 is failed
@@ -213,14 +213,14 @@
 
 - assert:
     that:
-    - networks_4.rebuilt == false
-    - networks_7.rebuilt == false
+      - networks_4.rebuilt == false
+      - networks_7.rebuilt == false
   when: docker_api_version is version('1.29', '>=') and docker_py_version is version('2.7.0', '>=')
 
 - assert:
     that:
-    - networks_4.rebuilt == true
-    - networks_7.rebuilt == true
+      - networks_4.rebuilt == true
+      - networks_7.rebuilt == true
   when: docker_api_version is version('1.29', '<') or docker_py_version is version('2.7.0', '<')
 
 ####################################################################
@@ -232,12 +232,12 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - name: "{{ network_name_1 }}"
         aliases:
-          - "alias1"
-          - "alias2"
+          - alias1
+          - alias2
   register: networks_aliases_1
 
 - name: networks.aliases (idempotency)
@@ -245,12 +245,12 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - name: "{{ network_name_1 }}"
         aliases:
-          - "alias1"
-          - "alias2"
+          - alias1
+          - alias2
   register: networks_aliases_2
 
 - name: networks.aliases (order idempotency)
@@ -258,12 +258,12 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - name: "{{ network_name_1 }}"
         aliases:
-          - "alias2"
-          - "alias1"
+          - alias2
+          - alias1
   register: networks_aliases_3
 
 - name: networks.aliases (change)
@@ -271,11 +271,11 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - name: "{{ network_name_1 }}"
         aliases:
-          - "alias1"
+          - alias1
   register: networks_aliases_4
 
 - name: networks.aliases (empty)
@@ -283,7 +283,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - name: "{{ network_name_1 }}"
         aliases: []
@@ -294,7 +294,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - name: "{{ network_name_1 }}"
         aliases: []
@@ -305,7 +305,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - name: "{{ network_name_1 }}"
         aliases:
@@ -339,7 +339,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - name: "{{ network_name_1 }}"
         options:
@@ -352,7 +352,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - name: "{{ network_name_1 }}"
         options:
@@ -365,7 +365,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - name: "{{ network_name_1 }}"
         options:
@@ -378,7 +378,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - name: "{{ network_name_1 }}"
         options:
@@ -390,7 +390,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - name: "{{ network_name_1 }}"
         options: [1, 2, 3]
@@ -402,7 +402,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - name: "{{ network_name_1 }}"
         options: {}
@@ -413,7 +413,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     networks:
       - name: "{{ network_name_1 }}"
         options: {}

@@ -7,8 +7,6 @@
 # WARNING: These are designed specifically for Ansible tests       #
 # and should not be used as examples of how to write Ansible roles #
 ####################################################################
-
-
 # Create random name prefix (for containers, networks, ...)
 - name: Create random name prefix
   set_fact:
@@ -20,18 +18,18 @@
     volume_names: []
 
 - debug:
-    msg: "Using container name prefix {{ name_prefix }}"
+    msg: Using container name prefix {{ name_prefix }}
 
 # Run the tests
 - block:
-  - name: Create a Swarm cluster
-    docker_swarm:
-      state: present
-      advertise_addr: "{{ansible_default_ipv4.address | default('127.0.0.1')}}"
+    - name: Create a Swarm cluster
+      docker_swarm:
+        state: present
+        advertise_addr: "{{ansible_default_ipv4.address | default('127.0.0.1')}}"
 
-  - include_tasks: run-test.yml
-    with_fileglob:
-      - "tests/*.yml"
+    - include_tasks: run-test.yml
+      with_fileglob:
+        - tests/*.yml
 
   always:
     - name: Make sure all services are removed
@@ -80,4 +78,5 @@
   when: docker_py_version is version('2.0.2', '>=') and docker_api_version is version('1.25', '>=')
 
 - fail: msg="Too old docker / docker-py version to run docker_swarm_service tests!"
-  when: not(docker_py_version is version('2.0.2', '>=') and docker_api_version is version('1.25', '>=')) and (ansible_distribution != 'CentOS' or ansible_distribution_major_version|int > 6)
+  when: not(docker_py_version is version('2.0.2', '>=') and docker_api_version is version('1.25', '>=')) and (ansible_distribution != 'CentOS' or ansible_distribution_major_version|int
+    > 6)

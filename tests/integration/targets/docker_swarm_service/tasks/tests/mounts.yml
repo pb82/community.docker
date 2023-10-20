@@ -32,11 +32,11 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
       - source: "{{ volume_name_1 }}"
-        target: "/tmp/{{ volume_name_1 }}"
-        type: "volume"
+        target: /tmp/{{ volume_name_1 }}
+        type: volume
   register: mounts_1
 
 - name: mounts (idempotency)
@@ -44,11 +44,11 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
       - source: "{{ volume_name_1 }}"
-        target: "/tmp/{{ volume_name_1 }}"
-        type: "volume"
+        target: /tmp/{{ volume_name_1 }}
+        type: volume
   register: mounts_2
 
 - name: mounts (add)
@@ -56,14 +56,14 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
       - source: "{{ volume_name_1 }}"
-        target: "/tmp/{{ volume_name_1 }}"
-        type: "volume"
-      - source: "/tmp/"
-        target: "/tmp/{{ volume_name_2 }}"
-        type: "bind"
+        target: /tmp/{{ volume_name_1 }}
+        type: volume
+      - source: /tmp/
+        target: /tmp/{{ volume_name_2 }}
+        type: bind
   register: mounts_3
 
 - name: mounts (order idempotency)
@@ -71,14 +71,14 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
-      - source: "/tmp/"
-        target: "/tmp/{{ volume_name_2 }}"
-        type: "bind"
+      - source: /tmp/
+        target: /tmp/{{ volume_name_2 }}
+        type: bind
       - source: "{{ volume_name_1 }}"
-        target: "/tmp/{{ volume_name_1 }}"
-        type: "volume"
+        target: /tmp/{{ volume_name_1 }}
+        type: volume
   register: mounts_4
 
 - name: mounts (empty)
@@ -86,7 +86,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts: []
   register: mounts_5
 
@@ -95,7 +95,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts: []
   register: mounts_6
 
@@ -123,23 +123,22 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
       - source: "{{ volume_name_1 }}"
-        target: "/tmp/{{ volume_name_1 }}"
+        target: /tmp/{{ volume_name_1 }}
         readonly: true
   register: mounts_readonly_1
-
 
 - name: mounts.readonly (idempotency)
   docker_swarm_service:
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
       - source: "{{ volume_name_1 }}"
-        target: "/tmp/{{ volume_name_1 }}"
+        target: /tmp/{{ volume_name_1 }}
         readonly: true
   register: mounts_readonly_2
 
@@ -148,10 +147,10 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
       - source: "{{ volume_name_1 }}"
-        target: "/tmp/{{ volume_name_1 }}"
+        target: /tmp/{{ volume_name_1 }}
         readonly: false
   register: mounts_readonly_3
 
@@ -176,26 +175,25 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
-      - source: "/tmp"
-        target: "/tmp/{{ volume_name_1 }}"
-        type: "bind"
-        propagation: "slave"
+      - source: /tmp
+        target: /tmp/{{ volume_name_1 }}
+        type: bind
+        propagation: slave
   register: mounts_propagation_1
-
 
 - name: mounts.propagation (idempotency)
   docker_swarm_service:
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
-      - source: "/tmp"
-        target: "/tmp/{{ volume_name_1 }}"
-        type: "bind"
-        propagation: "slave"
+      - source: /tmp
+        target: /tmp/{{ volume_name_1 }}
+        type: bind
+        propagation: slave
   register: mounts_propagation_2
 
 - name: mounts.propagation (change)
@@ -203,12 +201,12 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
-      - source: "/tmp"
-        target: "/tmp/{{ volume_name_1 }}"
-        type: "bind"
-        propagation: "rprivate"
+      - source: /tmp
+        target: /tmp/{{ volume_name_1 }}
+        type: bind
+        propagation: rprivate
   register: mounts_propagation_3
 
 - name: cleanup
@@ -232,27 +230,26 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
       - source: "{{ volume_name_1 }}"
-        target: "/tmp/{{ volume_name_1 }}"
-        type: "volume"
+        target: /tmp/{{ volume_name_1 }}
+        type: volume
         labels:
           mylabel: hello-world
           my-other-label: hello-mars
   register: mounts_labels_1
-
 
 - name: mounts.labels (idempotency)
   docker_swarm_service:
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
       - source: "{{ volume_name_1 }}"
-        target: "/tmp/{{ volume_name_1 }}"
-        type: "volume"
+        target: /tmp/{{ volume_name_1 }}
+        type: volume
         labels:
           mylabel: hello-world
           my-other-label: hello-mars
@@ -263,11 +260,11 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
       - source: "{{ volume_name_1 }}"
-        target: "/tmp/{{ volume_name_1 }}"
-        type: "volume"
+        target: /tmp/{{ volume_name_1 }}
+        type: volume
         labels:
           mylabel: hello-world
   register: mounts_labels_3
@@ -293,25 +290,24 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
       - source: "{{ volume_name_1 }}"
-        target: "/tmp/{{ volume_name_1 }}"
-        type: "volume"
+        target: /tmp/{{ volume_name_1 }}
+        type: volume
         no_copy: true
   register: mounts_no_copy_1
-
 
 - name: mounts.no_copy (idempotency)
   docker_swarm_service:
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
       - source: "{{ volume_name_1 }}"
-        target: "/tmp/{{ volume_name_1 }}"
-        type: "volume"
+        target: /tmp/{{ volume_name_1 }}
+        type: volume
         no_copy: true
   register: mounts_no_copy_2
 
@@ -320,11 +316,11 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
       - source: "{{ volume_name_1 }}"
-        target: "/tmp/{{ volume_name_1 }}"
-        type: "volume"
+        target: /tmp/{{ volume_name_1 }}
+        type: volume
         no_copy: false
   register: mounts_no_copy_3
 
@@ -349,15 +345,15 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
       - source: "{{ volume_name_1 }}"
-        target: "/tmp/{{ volume_name_1 }}"
-        type: "volume"
+        target: /tmp/{{ volume_name_1 }}
+        type: volume
         driver_config:
-          name: "nfs"
+          name: nfs
           options:
-            addr: "127.0.0.1"
+            addr: 127.0.0.1
   register: mounts_driver_config_1
 
 - name: mounts.driver_config
@@ -365,15 +361,15 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
       - source: "{{ volume_name_1 }}"
-        target: "/tmp/{{ volume_name_1 }}"
-        type: "volume"
+        target: /tmp/{{ volume_name_1 }}
+        type: volume
         driver_config:
-          name: "nfs"
+          name: nfs
           options:
-            addr: "127.0.0.1"
+            addr: 127.0.0.1
   register: mounts_driver_config_2
 
 - name: mounts.driver_config
@@ -381,13 +377,13 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
       - source: "{{ volume_name_1 }}"
-        target: "/tmp/{{ volume_name_1 }}"
-        type: "volume"
+        target: /tmp/{{ volume_name_1 }}
+        type: volume
         driver_config:
-          name: "local"
+          name: local
   register: mounts_driver_config_3
 
 - name: cleanup
@@ -411,12 +407,12 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
       - source: "{{ volume_name_1 }}"
-        target: "/tmp/{{ volume_name_1 }}"
-        type: "tmpfs"
-        tmpfs_size: "50M"
+        target: /tmp/{{ volume_name_1 }}
+        type: tmpfs
+        tmpfs_size: 50M
   register: mounts_tmpfs_size_1
   ignore_errors: true
 
@@ -425,12 +421,12 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
       - source: "{{ volume_name_1 }}"
-        target: "/tmp/{{ volume_name_1 }}"
-        type: "tmpfs"
-        tmpfs_size: "50M"
+        target: /tmp/{{ volume_name_1 }}
+        type: tmpfs
+        tmpfs_size: 50M
   register: mounts_tmpfs_size_2
   ignore_errors: true
 
@@ -439,12 +435,12 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
       - source: "{{ volume_name_1 }}"
-        target: "/tmp/{{ volume_name_1 }}"
-        type: "tmpfs"
-        tmpfs_size: "25M"
+        target: /tmp/{{ volume_name_1 }}
+        type: tmpfs
+        tmpfs_size: 25M
   register: mounts_tmpfs_size_3
   ignore_errors: true
 
@@ -462,8 +458,8 @@
   when: docker_py_version is version('2.6.0', '>=')
 - assert:
     that:
-    - mounts_tmpfs_size_1 is failed
-    - "'Minimum version required' in mounts_tmpfs_size_1.msg"
+      - mounts_tmpfs_size_1 is failed
+      - "'Minimum version required' in mounts_tmpfs_size_1.msg"
   when: docker_py_version is version('2.6.0', '<')
 
 ####################################################################
@@ -475,12 +471,12 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
       - source: "{{ volume_name_1 }}"
-        target: "/tmp/{{ volume_name_1 }}"
-        type: "tmpfs"
-        tmpfs_mode: 0444
+        target: /tmp/{{ volume_name_1 }}
+        type: tmpfs
+        tmpfs_mode: "0444"
   register: mounts_tmpfs_mode_1
   ignore_errors: true
 
@@ -489,12 +485,12 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
       - source: "{{ volume_name_1 }}"
-        target: "/tmp/{{ volume_name_1 }}"
-        type: "tmpfs"
-        tmpfs_mode: 0444
+        target: /tmp/{{ volume_name_1 }}
+        type: tmpfs
+        tmpfs_mode: "0444"
   register: mounts_tmpfs_mode_2
   ignore_errors: true
 
@@ -503,12 +499,12 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
       - source: "{{ volume_name_1 }}"
-        target: "/tmp/{{ volume_name_1 }}"
-        type: "tmpfs"
-        tmpfs_mode: 0777
+        target: /tmp/{{ volume_name_1 }}
+        type: tmpfs
+        tmpfs_mode: "0777"
   register: mounts_tmpfs_mode_3
   ignore_errors: true
 
@@ -526,8 +522,8 @@
   when: docker_py_version is version('2.6.0', '>=')
 - assert:
     that:
-    - mounts_tmpfs_size_1 is failed
-    - "'Minimum version required' in mounts_tmpfs_size_1.msg"
+      - mounts_tmpfs_size_1 is failed
+      - "'Minimum version required' in mounts_tmpfs_size_1.msg"
   when: docker_py_version is version('2.6.0', '<')
 
 ####################################################################
@@ -539,11 +535,11 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
       - source: ""
-        target: "/tmp/{{ volume_name_1 }}"
-        type: "tmpfs"
+        target: /tmp/{{ volume_name_1 }}
+        type: tmpfs
   register: mounts_tmpfs_source_1
   ignore_errors: true
 
@@ -552,11 +548,11 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
       - source: ""
-        target: "/tmp/{{ volume_name_1 }}"
-        type: "tmpfs"
+        target: /tmp/{{ volume_name_1 }}
+        type: tmpfs
   register: mounts_tmpfs_source_2
   ignore_errors: true
 
@@ -565,10 +561,10 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     mounts:
-      - target: "/tmp/{{ volume_name_1 }}"
-        type: "tmpfs"
+      - target: /tmp/{{ volume_name_1 }}
+        type: tmpfs
   register: mounts_tmpfs_source_3
   ignore_errors: true
 
@@ -586,8 +582,8 @@
   when: docker_py_version is version('2.6.0', '>=')
 - assert:
     that:
-    - mounts_tmpfs_source_1 is failed
-    - "'Minimum version required' in mounts_tmpfs_source_1.msg"
+      - mounts_tmpfs_source_1 is failed
+      - "'Minimum version required' in mounts_tmpfs_source_1.msg"
   when: docker_py_version is version('2.6.0', '<')
 
 ####################################################################

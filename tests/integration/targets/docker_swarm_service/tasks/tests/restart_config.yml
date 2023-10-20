@@ -20,9 +20,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     restart_config:
-      condition: "on-failure"
+      condition: on-failure
   register: restart_policy_1
 
 - name: restart_config.condition (idempotency)
@@ -30,9 +30,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     restart_config:
-      condition: "on-failure"
+      condition: on-failure
   register: restart_policy_2
 
 - name: restart_config.condition (change)
@@ -40,9 +40,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     restart_config:
-      condition: "any"
+      condition: any
   register: restart_policy_3
 
 - name: cleanup
@@ -66,7 +66,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     restart_config:
       max_attempts: 1
   register: restart_policy_attempts_1
@@ -76,7 +76,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     restart_config:
       max_attempts: 1
   register: restart_policy_attempts_2
@@ -86,7 +86,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     restart_config:
       max_attempts: 2
   register: restart_policy_attempts_3
@@ -112,7 +112,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     restart_config:
       delay: 5s
   register: restart_policy_delay_1
@@ -122,7 +122,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     restart_config:
       delay: 5s
   register: restart_policy_delay_2
@@ -132,7 +132,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     restart_config:
       delay: 10s
   register: restart_policy_delay_3
@@ -158,7 +158,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     restart_config:
       window: 10s
   register: restart_policy_window_1
@@ -168,7 +168,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     restart_config:
       window: 10s
   register: restart_policy_window_2
@@ -178,7 +178,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     restart_config:
       window: 20s
   register: restart_policy_window_3

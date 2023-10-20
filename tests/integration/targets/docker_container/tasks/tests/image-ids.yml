@@ -23,8 +23,8 @@
 - name: Get image ID of {{ docker_test_image_hello_world }} and {{ docker_test_image_alpine }} images
   docker_image_info:
     name:
-    - "{{ docker_test_image_hello_world }}"
-    - "{{ docker_test_image_alpine }}"
+      - "{{ docker_test_image_hello_world }}"
+      - "{{ docker_test_image_alpine }}"
   register: image_info
 
 - assert:
@@ -105,7 +105,7 @@
       - create_5 is changed
       - create_6 is changed
       - create_6.container.Image == image_info.images[1].Id
-      - create_6.container.Id == create_4.container.Id  # make sure container wasn't recreated
+      - create_6.container.Id == create_4.container.Id # make sure container wasn't recreated
 
 - name: Create container with {{ docker_test_image_digest_base }} image via old digest
   docker_container:
