@@ -20,7 +20,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     rollback_config:
       delay: 5s
   register: rollback_config_delay_1
@@ -31,7 +31,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     rollback_config:
       delay: 5s
   register: rollback_config_delay_2
@@ -42,7 +42,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     rollback_config:
       delay: 12s
   register: rollback_config_delay_3
@@ -75,9 +75,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     rollback_config:
-      failure_action: "pause"
+      failure_action: pause
   register: rollback_config_failure_action_1
   ignore_errors: true
 
@@ -86,9 +86,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     rollback_config:
-      failure_action: "pause"
+      failure_action: pause
   register: rollback_config_failure_action_2
   ignore_errors: true
 
@@ -97,9 +97,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     rollback_config:
-      failure_action: "continue"
+      failure_action: continue
   register: rollback_config_failure_action_3
   ignore_errors: true
 
@@ -130,9 +130,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     rollback_config:
-      max_failure_ratio: 0.25
+      max_failure_ratio: !!float "0.25"
   register: rollback_config_max_failure_ratio_1
   ignore_errors: true
 
@@ -141,9 +141,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     rollback_config:
-      max_failure_ratio: 0.25
+      max_failure_ratio: !!float "0.25"
   register: rollback_config_max_failure_ratio_2
   ignore_errors: true
 
@@ -152,9 +152,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     rollback_config:
-      max_failure_ratio: 0.50
+      max_failure_ratio: !!float "0.50"
   register: rollback_config_max_failure_ratio_3
   ignore_errors: true
 
@@ -185,7 +185,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     rollback_config:
       monitor: 10s
   register: rollback_config_monitor_1
@@ -196,7 +196,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     rollback_config:
       monitor: 10s
   register: rollback_config_monitor_2
@@ -207,7 +207,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     rollback_config:
       monitor: 60s
   register: rollback_config_monitor_3
@@ -240,9 +240,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     rollback_config:
-      order: "start-first"
+      order: start-first
   register: rollback_config_order_1
   ignore_errors: true
 
@@ -251,9 +251,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     rollback_config:
-      order: "start-first"
+      order: start-first
   register: rollback_config_order_2
   ignore_errors: true
 
@@ -262,9 +262,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     rollback_config:
-      order: "stop-first"
+      order: stop-first
   register: rollback_config_order_3
   ignore_errors: true
 
@@ -295,7 +295,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     rollback_config:
       parallelism: 2
   register: rollback_config_parallelism_1
@@ -306,7 +306,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     rollback_config:
       parallelism: 2
   register: rollback_config_parallelism_2
@@ -317,7 +317,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     rollback_config:
       parallelism: 1
   register: rollback_config_parallelism_3

@@ -25,28 +25,28 @@
     dnetworks: []
 
 - debug:
-    msg: "Using name prefix {{ name_prefix }}"
+    msg: Using name prefix {{ name_prefix }}
 
 - block:
-  - include_tasks: run-test.yml
-    with_fileglob:
-    - "tests/*.yml"
+    - include_tasks: run-test.yml
+      with_fileglob:
+        - tests/*.yml
 
   always:
-  - name: "Make sure all containers are removed"
-    docker_container:
-      name: "{{ item }}"
-      state: absent
-      force_kill: true
-    loop: "{{ cnames }}"
-  - name: "Make sure all networks are removed"
-    docker_network:
-      name: "{{ item }}"
-      state: absent
-      force: true
-    loop: "{{ dnetworks }}"
+    - name: Make sure all containers are removed
+      docker_container:
+        name: "{{ item }}"
+        state: absent
+        force_kill: true
+      loop: "{{ cnames }}"
+    - name: Make sure all networks are removed
+      docker_network:
+        name: "{{ item }}"
+        state: absent
+        force: true
+      loop: "{{ dnetworks }}"
 
-  when: docker_api_version is version('1.25', '>=')  # FIXME: find out API version!
+  when: docker_api_version is version('1.25', '>=') # FIXME: find out API version!
 
 - fail: msg="Too old docker / docker-py version to run docker_network tests!"
   when: not(docker_api_version is version('1.25', '>=')) and (ansible_distribution != 'CentOS' or ansible_distribution_major_version|int > 6)

@@ -84,7 +84,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
   register: command_1
 
 - name: command (idempotency)
@@ -92,7 +92,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
   register: command_2
 
 - name: command (less parameters)
@@ -100,7 +100,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
   register: command_3
 
 - name: command (as list)
@@ -109,9 +109,9 @@
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
     command:
-      - "/bin/sh"
-      - "-c"
-      - "sleep 10m"
+      - /bin/sh
+      - -c
+      - sleep 10m
   register: command_4
 
 - name: command (empty)
@@ -145,7 +145,7 @@
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
     command:
-      - "/bin/sh"
+      - /bin/sh
       - true
   register: command_8
   ignore_errors: true
@@ -176,7 +176,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     container_labels:
       test_1: "1"
       test_2: "2"
@@ -187,7 +187,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     container_labels:
       test_1: "1"
       test_2: "2"
@@ -198,7 +198,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     container_labels:
       test_1: "1"
       test_2: "3"
@@ -209,7 +209,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     container_labels: {}
   register: container_labels_4
 
@@ -218,7 +218,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     container_labels: {}
   register: container_labels_5
 
@@ -245,7 +245,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     dns:
       - 1.1.1.1
       - 8.8.8.8
@@ -257,7 +257,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     dns:
       - 1.1.1.1
       - 8.8.8.8
@@ -269,7 +269,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     dns:
       - 8.8.8.8
       - 1.1.1.1
@@ -281,7 +281,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     dns:
       - 8.8.8.8
       - 9.9.9.9
@@ -293,7 +293,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     dns: []
   register: dns_5
   ignore_errors: true
@@ -303,7 +303,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     dns: []
   register: dns_6
   ignore_errors: true
@@ -325,8 +325,8 @@
   when: docker_py_version is version('2.6.0', '>=')
 - assert:
     that:
-    - dns_1 is failed
-    - "'Minimum version required' in dns_1.msg"
+      - dns_1 is failed
+      - "'Minimum version required' in dns_1.msg"
   when: docker_py_version is version('2.6.0', '<')
 
 ####################################################################
@@ -338,9 +338,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     dns_options:
-      - "timeout:10"
+      - timeout:10
       - rotate
   register: dns_options_1
   ignore_errors: true
@@ -350,9 +350,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     dns_options:
-      - "timeout:10"
+      - timeout:10
       - rotate
   register: dns_options_2
   ignore_errors: true
@@ -362,9 +362,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     dns_options:
-      - "timeout:10"
+      - timeout:10
       - no-check-names
   register: dns_options_3
   ignore_errors: true
@@ -374,10 +374,10 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     dns_options:
       - no-check-names
-      - "timeout:10"
+      - timeout:10
   register: dns_options_4
   ignore_errors: true
 
@@ -386,7 +386,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     dns_options: []
   register: dns_options_5
   ignore_errors: true
@@ -396,7 +396,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     dns_options: []
   register: dns_options_6
   ignore_errors: true
@@ -418,8 +418,8 @@
   when: docker_py_version is version('2.6.0', '>=')
 - assert:
     that:
-    - dns_options_1 is failed
-    - "'Minimum version required' in dns_options_1.msg"
+      - dns_options_1 is failed
+      - "'Minimum version required' in dns_options_1.msg"
   when: docker_py_version is version('2.6.0', '<')
 
 ####################################################################
@@ -431,7 +431,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     dns_search:
       - example.com
       - example.org
@@ -443,7 +443,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     dns_search:
       - example.com
       - example.org
@@ -455,7 +455,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     dns_search:
       - example.org
       - example.com
@@ -467,7 +467,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     dns_search:
       - ansible.com
       - example.com
@@ -479,7 +479,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     dns_search: []
   register: dns_search_5
   ignore_errors: true
@@ -489,7 +489,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     dns_search: []
   register: dns_search_6
   ignore_errors: true
@@ -511,8 +511,8 @@
   when: docker_py_version is version('2.6.0', '>=')
 - assert:
     that:
-    - dns_search_1 is failed
-    - "'Minimum version required' in dns_search_1.msg"
+      - dns_search_1 is failed
+      - "'Minimum version required' in dns_search_1.msg"
   when: docker_py_version is version('2.6.0', '<')
 
 ####################################################################
@@ -524,8 +524,8 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
-    endpoint_mode: "dnsrr"
+    command: /bin/sh -v -c "sleep 10m"
+    endpoint_mode: dnsrr
   register: endpoint_mode_1
   ignore_errors: true
 
@@ -534,8 +534,8 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
-    endpoint_mode: "dnsrr"
+    command: /bin/sh -v -c "sleep 10m"
+    endpoint_mode: dnsrr
   register: endpoint_mode_2
   ignore_errors: true
 
@@ -544,8 +544,8 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
-    endpoint_mode: "vip"
+    command: /bin/sh -v -c "sleep 10m"
+    endpoint_mode: vip
   register: endpoint_mode_3
   ignore_errors: true
 
@@ -563,8 +563,8 @@
   when: docker_py_version is version('3.0.0', '>=')
 - assert:
     that:
-    - endpoint_mode_1 is failed
-    - "'Minimum version required' in endpoint_mode_1.msg"
+      - endpoint_mode_1 is failed
+      - "'Minimum version required' in endpoint_mode_1.msg"
   when: docker_py_version is version('3.0.0', '<')
 
 ####################################################################
@@ -576,10 +576,10 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     env:
-      - "TEST1=val1"
-      - "TEST2=val2"
+      - TEST1=val1
+      - TEST2=val2
   register: env_1
 
 - name: env (idempotency)
@@ -587,7 +587,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     env:
       TEST1: val1
       TEST2: val2
@@ -598,10 +598,10 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     env:
-      - "TEST1=val1"
-      - "TEST2=val3"
+      - TEST1=val1
+      - TEST2=val3
   register: env_3
 
 - name: env (order idempotency)
@@ -609,10 +609,10 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     env:
-      - "TEST2=val3"
-      - "TEST1=val1"
+      - TEST2=val3
+      - TEST1=val1
   register: env_4
 
 - name: env (empty)
@@ -620,7 +620,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     env: []
   register: env_5
 
@@ -629,7 +629,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     env: []
   register: env_6
 
@@ -649,8 +649,8 @@
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
     env:
-      - "TEST1=val3"
-      - "TEST2"
+      - TEST1=val3
+      - TEST2
   register: env_8
   ignore_errors: true
 
@@ -755,13 +755,13 @@
 
 - assert:
     that:
-    - env_file_1 is changed
-    - env_file_2 is not changed
-    - env_file_3 is changed
-    - env_file_4 is changed
-    - env_file_5 is not changed
-    - env_file_6 is changed
-    - env_file_7 is not changed
+      - env_file_1 is changed
+      - env_file_2 is not changed
+      - env_file_3 is changed
+      - env_file_4 is changed
+      - env_file_5 is not changed
+      - env_file_6 is changed
+      - env_file_7 is not changed
 
 ###################################################################
 ## force_update ###################################################
@@ -772,7 +772,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     args:
       - sleep
       - "3600"
@@ -785,7 +785,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     args:
       - sleep
       - "3600"
@@ -806,8 +806,8 @@
   when: docker_py_version is version('2.1.0', '>=')
 - assert:
     that:
-    - force_update_1 is failed
-    - "'Minimum version required' in force_update_1.msg"
+      - force_update_1 is failed
+      - "'Minimum version required' in force_update_1.msg"
   when: docker_py_version is version('2.1.0', '<')
 
 ####################################################################
@@ -819,7 +819,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     groups:
       - "1234"
       - "5678"
@@ -831,7 +831,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     groups:
       - "1234"
       - "5678"
@@ -843,7 +843,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     groups:
       - "5678"
       - "1234"
@@ -855,7 +855,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     groups:
       - "1234"
   register: groups_4
@@ -866,7 +866,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     groups: []
   register: groups_5
   ignore_errors: true
@@ -876,7 +876,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     groups: []
   register: groups_6
   ignore_errors: true
@@ -889,17 +889,17 @@
 
 - assert:
     that:
-    - groups_1 is changed
-    - groups_2 is not changed
-    - groups_3 is not changed
-    - groups_4 is changed
-    - groups_5 is changed
-    - groups_6 is not changed
+      - groups_1 is changed
+      - groups_2 is not changed
+      - groups_3 is not changed
+      - groups_4 is changed
+      - groups_5 is changed
+      - groups_6 is not changed
   when: docker_py_version is version('2.6.0', '>=')
 - assert:
     that:
-    - groups_1 is failed
-    - "'Minimum version required' in groups_1.msg"
+      - groups_1 is failed
+      - "'Minimum version required' in groups_1.msg"
   when: docker_py_version is version('2.6.0', '<')
 
 ####################################################################
@@ -911,14 +911,14 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     healthcheck:
       test:
         - CMD
         - sleep
         - "1"
       timeout: 2s
-      interval: 0h0m2s3ms4us
+      interval: "0h0m2s3ms4us"
       retries: 2
       start_period: 20s
   register: healthcheck_1
@@ -929,14 +929,14 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     healthcheck:
       test:
         - CMD
         - sleep
         - 1
       timeout: 2s
-      interval: 0h0m2s3ms4us
+      interval: "0h0m2s3ms4us"
       retries: 2
       start_period: 20s
   register: healthcheck_2
@@ -947,14 +947,14 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     healthcheck:
       test:
         - CMD
         - sleep
         - "1"
       timeout: 3s
-      interval: 0h1m2s3ms4us
+      interval: "0h1m2s3ms4us"
       retries: 3
   register: healthcheck_3
   ignore_errors: true
@@ -964,7 +964,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     healthcheck:
       test:
         - NONE
@@ -976,7 +976,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     healthcheck:
       test:
         - NONE
@@ -988,9 +988,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     healthcheck:
-      test: "sleep 1"
+      test: sleep 1
   register: healthcheck_6
   ignore_errors: true
 
@@ -999,9 +999,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     healthcheck:
-      test: "sleep 1"
+      test: sleep 1
   register: healthcheck_7
   ignore_errors: true
 
@@ -1010,7 +1010,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     healthcheck: {}
   register: healthcheck_8
   ignore_errors: true
@@ -1020,7 +1020,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     healthcheck: {}
   register: healthcheck_9
   ignore_errors: true
@@ -1033,20 +1033,20 @@
 
 - assert:
     that:
-    - healthcheck_1 is changed
-    - healthcheck_2 is not changed
-    - healthcheck_3 is changed
-    - healthcheck_4 is changed
-    - healthcheck_5 is not changed
-    - healthcheck_6 is changed
-    - healthcheck_7 is not changed
-    - healthcheck_8 is changed
-    - healthcheck_9 is not changed
+      - healthcheck_1 is changed
+      - healthcheck_2 is not changed
+      - healthcheck_3 is changed
+      - healthcheck_4 is changed
+      - healthcheck_5 is not changed
+      - healthcheck_6 is changed
+      - healthcheck_7 is not changed
+      - healthcheck_8 is changed
+      - healthcheck_9 is not changed
   when: docker_api_version is version('1.29', '>=') and docker_py_version is version('2.6.0', '>=')
 - assert:
     that:
-    - healthcheck_1 is failed
-    - "'Minimum version required' in healthcheck_1.msg"
+      - healthcheck_1 is failed
+      - "'Minimum version required' in healthcheck_1.msg"
   when: docker_api_version is version('1.29', '<') or docker_py_version is version('2.6.0', '<')
 
 ###################################################################
@@ -1058,7 +1058,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     hostname: me.example.com
   register: hostname_1
   ignore_errors: true
@@ -1068,7 +1068,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     hostname: me.example.com
   register: hostname_2
   ignore_errors: true
@@ -1078,7 +1078,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     hostname: me.example.org
   register: hostname_3
   ignore_errors: true
@@ -1097,8 +1097,8 @@
   when: docker_py_version is version('2.2.0', '>=')
 - assert:
     that:
-    - hostname_1 is failed
-    - "'Minimum version required' in hostname_1.msg"
+      - hostname_1 is failed
+      - "'Minimum version required' in hostname_1.msg"
   when: docker_py_version is version('2.2.0', '<')
 
 ###################################################################
@@ -1110,7 +1110,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     hosts:
       example.com: 1.2.3.4
       example.org: 4.3.2.1
@@ -1122,7 +1122,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     hosts:
       example.com: 1.2.3.4
       example.org: 4.3.2.1
@@ -1134,7 +1134,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     hosts:
       example.com: 1.2.3.4
   register: hosts_3
@@ -1154,10 +1154,9 @@
   when: docker_py_version is version('2.6.0', '>=')
 - assert:
     that:
-    - hosts_1 is failed
-    - "'Minimum version required' in hosts_1.msg"
+      - hosts_1 is failed
+      - "'Minimum version required' in hosts_1.msg"
   when: docker_py_version is version('2.6.0', '<')
-
 
 ###################################################################
 ## image ##########################################################
@@ -1168,7 +1167,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
   register: image_1
 
 - name: image (idempotency)
@@ -1176,7 +1175,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
   register: image_2
 
 - name: image (change)
@@ -1206,7 +1205,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     labels:
       test_1: "1"
       test_2: "2"
@@ -1217,7 +1216,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     labels:
       test_1: "1"
       test_2: "2"
@@ -1228,7 +1227,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     labels:
       test_1: "1"
       test_2: "2"
@@ -1240,7 +1239,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     labels: {}
   register: labels_4
 
@@ -1249,7 +1248,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     labels: {}
   register: labels_5
 
@@ -1276,8 +1275,8 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
-    mode: "replicated"
+    command: /bin/sh -v -c "sleep 10m"
+    mode: replicated
     replicas: 1
   register: mode_1
 
@@ -1286,8 +1285,8 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
-    mode: "replicated"
+    command: /bin/sh -v -c "sleep 10m"
+    mode: replicated
     replicas: 1
   register: mode_2
 
@@ -1296,8 +1295,8 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
-    mode: "global"
+    command: /bin/sh -v -c "sleep 10m"
+    mode: global
     replicas: 1
   register: mode_3
 
@@ -1322,7 +1321,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     stop_grace_period: 60s
   register: stop_grace_period_1
 
@@ -1331,7 +1330,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     stop_grace_period: 60s
   register: stop_grace_period_2
 
@@ -1340,7 +1339,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     stop_grace_period: 1m30s
   register: stop_grace_period_3
 
@@ -1352,9 +1351,9 @@
 
 - assert:
     that:
-    - stop_grace_period_1 is changed
-    - stop_grace_period_2 is not changed
-    - stop_grace_period_3 is changed
+      - stop_grace_period_1 is changed
+      - stop_grace_period_2 is not changed
+      - stop_grace_period_3 is changed
 
 ####################################################################
 ## stop_signal #####################################################
@@ -1365,7 +1364,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     stop_signal: "30"
   register: stop_signal_1
   ignore_errors: true
@@ -1375,7 +1374,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     stop_signal: "30"
   register: stop_signal_2
   ignore_errors: true
@@ -1385,7 +1384,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     stop_signal: "9"
   register: stop_signal_3
   ignore_errors: true
@@ -1398,14 +1397,14 @@
 
 - assert:
     that:
-    - stop_signal_1 is changed
-    - stop_signal_2 is not changed
-    - stop_signal_3 is changed
+      - stop_signal_1 is changed
+      - stop_signal_2 is not changed
+      - stop_signal_3 is changed
   when: docker_api_version is version('1.28', '>=') and docker_py_version is version('2.6.0', '>=')
 - assert:
     that:
-    - stop_signal_1 is failed
-    - "'Minimum version required' in stop_signal_1.msg"
+      - stop_signal_1 is failed
+      - "'Minimum version required' in stop_signal_1.msg"
   when: docker_api_version is version('1.28', '<') or docker_py_version is version('2.6.0', '<')
 
 ####################################################################
@@ -1417,7 +1416,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     publish:
       - protocol: tcp
         published_port: 60001
@@ -1433,7 +1432,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     publish:
       - protocol: udp
         published_port: 60002
@@ -1448,7 +1447,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     publish:
       - protocol: tcp
         published_port: 60002
@@ -1464,7 +1463,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     publish:
       - protocol: tcp
         published_port: 60002
@@ -1482,7 +1481,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     publish:
       - protocol: udp
         published_port: 60001
@@ -1500,7 +1499,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     publish: []
   register: publish_6
   ignore_errors: true
@@ -1510,7 +1509,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     publish: []
   register: publish_7
   ignore_errors: true
@@ -1520,7 +1519,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     publish:
       - protocol: udp
         published_port: 60001
@@ -1542,7 +1541,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     publish:
       - protocol: udp
         target_port: 60001
@@ -1559,7 +1558,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     publish:
       - protocol: udp
         target_port: 60001
@@ -1593,8 +1592,8 @@
   when: docker_py_version is version('3.0.0', '>=')
 - assert:
     that:
-    - publish_1 is failed
-    - "'Minimum version required' in publish_1.msg"
+      - publish_1 is failed
+      - "'Minimum version required' in publish_1.msg"
   when: docker_py_version is version('3.0.0', '<')
 
 ###################################################################
@@ -1606,7 +1605,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     read_only: true
   register: read_only_1
   ignore_errors: true
@@ -1616,7 +1615,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     read_only: true
   register: read_only_2
   ignore_errors: true
@@ -1626,7 +1625,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     read_only: false
   register: read_only_3
   ignore_errors: true
@@ -1645,8 +1644,8 @@
   when: docker_api_version is version('1.28', '>=') and docker_py_version is version('2.6.0', '>=')
 - assert:
     that:
-    - read_only_1 is failed
-    - "'Minimum version required' in read_only_1.msg"
+      - read_only_1 is failed
+      - "'Minimum version required' in read_only_1.msg"
   when: docker_api_version is version('1.28', '<') or docker_py_version is version('2.6.0', '<')
 
 ###################################################################
@@ -1658,7 +1657,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     replicas: 2
   register: replicas_1
 
@@ -1667,7 +1666,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     replicas: 2
   register: replicas_2
 
@@ -1676,7 +1675,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     replicas: 3
   register: replicas_3
 
@@ -1700,7 +1699,7 @@
   docker_swarm_service:
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     resolve_image: false
   register: resolve_image_1
 
@@ -1708,7 +1707,7 @@
   docker_swarm_service:
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     resolve_image: false
   register: resolve_image_2
 
@@ -1716,7 +1715,7 @@
   docker_swarm_service:
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     resolve_image: true
   register: resolve_image_3
   ignore_errors: true
@@ -1738,7 +1737,7 @@
       - resolve_image_1 is changed
       - resolve_image_2 is not changed
       - resolve_image_3 is failed
-      - "('version is ' ~ docker_py_version ~ ' ') in resolve_image_3.msg"
+      - ('version is ' ~ docker_py_version ~ ' ') in resolve_image_3.msg
       - "'Minimum version required is 3.2.0 ' in resolve_image_3.msg"
   when: docker_api_version is version('1.30', '<') or docker_py_version is version('3.2.0', '<')
 
@@ -1751,7 +1750,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     tty: true
   register: tty_1
   ignore_errors: true
@@ -1761,7 +1760,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     tty: true
   register: tty_2
   ignore_errors: true
@@ -1771,7 +1770,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     tty: false
   register: tty_3
   ignore_errors: true
@@ -1790,8 +1789,8 @@
   when: docker_py_version is version('2.4.0', '>=')
 - assert:
     that:
-    - tty_1 is failed
-    - "'Minimum version required' in tty_1.msg"
+      - tty_1 is failed
+      - "'Minimum version required' in tty_1.msg"
   when: docker_py_version is version('2.4.0', '<')
 
 ###################################################################
@@ -1803,8 +1802,8 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
-    user: "operator"
+    command: /bin/sh -v -c "sleep 10m"
+    user: operator
   register: user_1
 
 - name: user (idempotency)
@@ -1812,8 +1811,8 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
-    user: "operator"
+    command: /bin/sh -v -c "sleep 10m"
+    user: operator
   register: user_2
 
 - name: user (change)
@@ -1821,8 +1820,8 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
-    user: "root"
+    command: /bin/sh -v -c "sleep 10m"
+    user: root
   register: user_3
 
 - name: cleanup
@@ -1873,9 +1872,9 @@
 
 - assert:
     that:
-    - working_dir_1 is changed
-    - working_dir_2 is not changed
-    - working_dir_3 is changed
+      - working_dir_1 is changed
+      - working_dir_2 is not changed
+      - working_dir_3 is changed
 
 ####################################################################
 ## init ############################################################
@@ -1920,8 +1919,8 @@
 
 - assert:
     that:
-    - init_1 is failed
-    - "('version is ' ~ docker_api_version ~'. Minimum version required is 1.37') in hosts_1.msg"
+      - init_1 is failed
+      - ('version is ' ~ docker_api_version ~'. Minimum version required is 1.37') in hosts_1.msg
   when: docker_api_version is version('1.37', '<')
 
 ####################################################################
@@ -1935,9 +1934,9 @@
     resolve_image: false
     init: true
     cap_add:
-    - sys_time
+      - sys_time
     cap_drop:
-    - all
+      - all
   register: capabilities_1
   ignore_errors: true
 
@@ -1948,9 +1947,9 @@
     resolve_image: false
     init: true
     cap_add:
-    - sys_time
+      - sys_time
     cap_drop:
-    - all
+      - all
   register: capabilities_2
   ignore_errors: true
   diff: true
@@ -1963,7 +1962,7 @@
     init: true
     cap_add: []
     cap_drop:
-    - all
+      - all
   register: capabilities_3
   ignore_errors: true
   diff: true
@@ -1975,9 +1974,9 @@
     resolve_image: false
     init: true
     cap_add:
-    - setgid
+      - setgid
     cap_drop:
-    - all
+      - all
   register: capabilities_4
   ignore_errors: true
   diff: true
@@ -1990,16 +1989,16 @@
 
 - assert:
     that:
-    - capabilities_1 is changed
-    - capabilities_2 is not changed
-    - capabilities_3 is changed
-    - capabilities_4 is changed
+      - capabilities_1 is changed
+      - capabilities_2 is not changed
+      - capabilities_3 is changed
+      - capabilities_4 is changed
   when: docker_api_version is version('1.41', '>=') and docker_py_version is version('5.0.3', '>=')
 
 - assert:
     that:
-    - capabilities_1 is failed
-    - >
-      (('version is ' ~ docker_py_version ~ ' ') in capabilities_1.msg and 'Minimum version required is 5.0.3 ' in capabilities_1.msg)
-      or (('Docker API version is ' ~ docker_api_version ~ '. ') in capabilities_1.msg and 'Minimum version required is 1.41 ' in capabilities_1.msg)
+      - capabilities_1 is failed
+      - >
+        (('version is ' ~ docker_py_version ~ ' ') in capabilities_1.msg and 'Minimum version required is 5.0.3 ' in capabilities_1.msg)
+        or (('Docker API version is ' ~ docker_api_version ~ '. ') in capabilities_1.msg and 'Minimum version required is 1.41 ' in capabilities_1.msg)
   when: docker_api_version is version('1.41', '<') or docker_py_version is version('5.0.3', '<')

@@ -18,13 +18,13 @@ pr:
       - stable-*
 
 schedules:
-  - cron: 0 9 * * *
+  - cron: "0 9 * * *"
     displayName: Nightly
     always: true
     branches:
       include:
         - main
-  - cron: 0 12 * * 0
+  - cron: "0 12 * * 0"
     displayName: Weekly (old stable branches)
     always: true
     branches:
@@ -51,8 +51,7 @@ resources:
 pool: Standard
 
 stages:
-
-### Sanity & units
+  ### Sanity & units
   - stage: Ansible_devel
     displayName: Sanity & Units devel
     dependsOn: []
@@ -61,11 +60,11 @@ stages:
         parameters:
           targets:
             - name: Sanity
-              test: 'devel/sanity/1'
+              test: devel/sanity/1
             - name: Sanity Extra # Only on devel
-              test: 'devel/sanity/extra'
+              test: devel/sanity/extra
             - name: Units
-              test: 'devel/units/1'
+              test: devel/units/1
   - stage: Ansible_2_16
     displayName: Sanity & Units 2.16
     dependsOn: []
@@ -74,9 +73,9 @@ stages:
         parameters:
           targets:
             - name: Sanity
-              test: '2.16/sanity/1'
+              test: 2.16/sanity/1
             - name: Units
-              test: '2.16/units/1'
+              test: 2.16/units/1
   - stage: Ansible_2_15
     displayName: Sanity & Units 2.15
     dependsOn: []
@@ -85,9 +84,9 @@ stages:
         parameters:
           targets:
             - name: Sanity
-              test: '2.15/sanity/1'
+              test: 2.15/sanity/1
             - name: Units
-              test: '2.15/units/1'
+              test: 2.15/units/1
   - stage: Ansible_2_14
     displayName: Sanity & Units 2.14
     dependsOn: []
@@ -96,11 +95,11 @@ stages:
         parameters:
           targets:
             - name: Sanity
-              test: '2.14/sanity/1'
+              test: 2.14/sanity/1
             - name: Units
-              test: '2.14/units/1'
+              test: 2.14/units/1
 
-### Docker
+  ### Docker
   - stage: Docker_devel
     displayName: Docker devel
     dependsOn: []
@@ -164,7 +163,7 @@ stages:
             - 4
             - 5
 
-### Community Docker
+  ### Community Docker
   - stage: Docker_community_devel
     displayName: Docker (community images) devel
     dependsOn: []
@@ -183,7 +182,7 @@ stages:
             - 4
             - 5
 
-### Remote
+  ### Remote
   - stage: Remote_devel
     displayName: Remote devel
     dependsOn: []
@@ -194,9 +193,9 @@ stages:
           targets:
             - name: RHEL 9.2 with latest Docker SDK from PyPi
               test: rhel/9.2-pypi-latest
-            # Currently always hangs in group 2
-            # - name: RHEL 8.8
-            #   test: rhel/8.8
+          # Currently always hangs in group 2
+          # - name: RHEL 8.8
+          #   test: rhel/8.8
           groups:
             - 1
             - 2

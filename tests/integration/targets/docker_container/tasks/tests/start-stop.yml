@@ -17,7 +17,7 @@
 - name: Create container (check)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: present
   check_mode: true
@@ -26,7 +26,7 @@
 - name: Create container
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: present
   register: create_2
@@ -34,7 +34,7 @@
 - name: Create container (idempotent)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: present
   register: create_3
@@ -42,7 +42,7 @@
 - name: Create container (idempotent check)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: present
   check_mode: true
@@ -50,10 +50,10 @@
 
 - assert:
     that:
-    - create_1 is changed
-    - create_2 is changed
-    - create_3 is not changed
-    - create_4 is not changed
+      - create_1 is changed
+      - create_2 is changed
+      - create_3 is not changed
+      - create_4 is not changed
 
 ####################################################################
 ## Starting (after creation) #######################################
@@ -87,10 +87,10 @@
 
 - assert:
     that:
-    - start_1 is changed
-    - start_2 is changed
-    - start_3 is not changed
-    - start_4 is not changed
+      - start_1 is changed
+      - start_2 is changed
+      - start_3 is not changed
+      - start_4 is not changed
 
 ####################################################################
 ## Present check for running container #############################
@@ -99,7 +99,7 @@
 - name: Present check for running container (check)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: present
   check_mode: true
@@ -108,15 +108,15 @@
 - name: Present check for running container
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: present
   register: present_check_2
 
 - assert:
     that:
-    - present_check_1 is not changed
-    - present_check_2 is not changed
+      - present_check_1 is not changed
+      - present_check_2 is not changed
 
 ####################################################################
 ## Starting (from scratch) #########################################
@@ -131,7 +131,7 @@
 - name: Start container from scratch (check)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     stop_timeout: 1
     name: "{{ cname }}"
     state: started
@@ -141,7 +141,7 @@
 - name: Start container from scratch
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     stop_timeout: 1
     name: "{{ cname }}"
     state: started
@@ -150,7 +150,7 @@
 - name: Start container from scratch (idempotent)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     stop_timeout: 1
     name: "{{ cname }}"
     state: started
@@ -159,7 +159,7 @@
 - name: Start container from scratch (idempotent check)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     stop_timeout: 1
     name: "{{ cname }}"
     state: started
@@ -168,10 +168,10 @@
 
 - assert:
     that:
-    - start_scratch_1 is changed
-    - start_scratch_2 is changed
-    - start_scratch_3 is not changed
-    - start_scratch_4 is not changed
+      - start_scratch_1 is changed
+      - start_scratch_2 is changed
+      - start_scratch_3 is not changed
+      - start_scratch_4 is not changed
 
 ####################################################################
 ## Recreating ######################################################
@@ -180,7 +180,7 @@
 - name: Recreating container (created)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: present
     force_kill: true
@@ -189,7 +189,7 @@
 - name: Recreating container (created, recreate, check mode)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     recreate: true
     state: present
@@ -200,7 +200,7 @@
 - name: Recreating container (created, recreate)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     recreate: true
     state: present
@@ -210,7 +210,7 @@
 - name: Recreating container (started)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     force_kill: true
@@ -219,7 +219,7 @@
 - name: Recreating container (started, recreate, check mode)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     recreate: true
     removal_wait_timeout: 10
@@ -231,7 +231,7 @@
 - name: Recreating container (started, recreate)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     recreate: true
     removal_wait_timeout: 10
@@ -253,16 +253,16 @@
 
 - assert:
     that:
-    - recreate_2 is changed
-    - recreate_3 is changed
-    - recreate_4 is changed
-    - recreate_5 is changed
-    - recreate_6 is changed
-    - recreate_1.container.Id == recreate_2.container.Id
-    - recreate_1.container.Id != recreate_3.container.Id
-    - recreate_3.container.Id == recreate_4.container.Id
-    - recreate_4.container.Id == recreate_5.container.Id
-    - recreate_4.container.Id != recreate_6.container.Id
+      - recreate_2 is changed
+      - recreate_3 is changed
+      - recreate_4 is changed
+      - recreate_5 is changed
+      - recreate_6 is changed
+      - recreate_1.container.Id == recreate_2.container.Id
+      - recreate_1.container.Id != recreate_3.container.Id
+      - recreate_3.container.Id == recreate_4.container.Id
+      - recreate_4.container.Id == recreate_5.container.Id
+      - recreate_4.container.Id != recreate_6.container.Id
 
 ####################################################################
 ## Restarting ######################################################
@@ -271,18 +271,18 @@
 - name: Restarting
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     stop_timeout: 1
     volumes:
-    - /tmp/tmp
+      - /tmp/tmp
   register: restart_1
 
 - name: Restarting (restart, check mode)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     restart: true
     state: started
@@ -294,7 +294,7 @@
 - name: Restarting (restart)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     restart: true
     state: started
@@ -305,12 +305,12 @@
 - name: Restarting (verify volumes)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     stop_timeout: 1
     volumes:
-    - /tmp/tmp
+      - /tmp/tmp
   register: restart_4
 
 - name: cleanup
@@ -322,11 +322,11 @@
 
 - assert:
     that:
-    - restart_1 is changed
-    - restart_2 is changed
-    - restart_3 is changed
-    - restart_1.container.Id == restart_3.container.Id
-    - restart_4 is not changed
+      - restart_1 is changed
+      - restart_2 is changed
+      - restart_3 is changed
+      - restart_1.container.Id == restart_3.container.Id
+      - restart_4 is not changed
 
 ####################################################################
 ## Stopping ########################################################
@@ -368,10 +368,10 @@
 
 - assert:
     that:
-    - stop_1 is changed
-    - stop_2 is changed
-    - stop_3 is not changed
-    - stop_4 is not changed
+      - stop_1 is changed
+      - stop_2 is changed
+      - stop_3 is not changed
+      - stop_4 is not changed
 
 ####################################################################
 ## Removing ########################################################
@@ -405,10 +405,10 @@
 
 - assert:
     that:
-    - remove_1 is changed
-    - remove_2 is changed
-    - remove_3 is not changed
-    - remove_4 is not changed
+      - remove_1 is changed
+      - remove_2 is changed
+      - remove_3 is not changed
+      - remove_4 is not changed
 
 ####################################################################
 ## Removing (from running) #########################################
@@ -417,7 +417,7 @@
 - name: Start container (setup for removing from running)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
 
@@ -453,7 +453,7 @@
 
 - assert:
     that:
-    - remove_from_running_1 is changed
-    - remove_from_running_2 is changed
-    - remove_from_running_3 is not changed
-    - remove_from_running_4 is not changed
+      - remove_from_running_1 is changed
+      - remove_from_running_2 is changed
+      - remove_from_running_3 is not changed
+      - remove_from_running_4 is not changed

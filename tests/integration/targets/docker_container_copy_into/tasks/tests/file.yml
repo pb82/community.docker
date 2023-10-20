@@ -17,7 +17,7 @@
     image: "{{ docker_test_image_alpine }}"
     command:
       - /bin/sh
-      - "-c"
+      - -c
       - >-
         mkdir /dir;
         ln -s file /lnk;
@@ -31,35 +31,35 @@
 
 - name: Create file 1
   copy:
-    dest: '{{ remote_tmp_dir }}/file_1'
+    dest: "{{ remote_tmp_dir }}/file_1"
     content: |
       Content 1
-    mode: 0644
+    mode: "0644"
 
 - name: Create file 2
   copy:
-    dest: '{{ remote_tmp_dir }}/file_2'
+    dest: "{{ remote_tmp_dir }}/file_2"
     content: |-
       Content 2
       Extra line
-    mode: 0644
+    mode: "0644"
 
 - name: Create link 1
   file:
-    dest: '{{ remote_tmp_dir }}/link_1'
+    dest: "{{ remote_tmp_dir }}/link_1"
     state: link
     src: file_1
     follow: false
-    mode: 0644
+    mode: "0644"
 
 - name: Create link 2
   file:
-    dest: '{{ remote_tmp_dir }}/link_2'
+    dest: "{{ remote_tmp_dir }}/link_2"
     state: link
     src: dead
     force: true
     follow: false
-    mode: 0644
+    mode: "0644"
 
 ################################################################################################
 # Do tests
@@ -68,60 +68,60 @@
 
 - name: Copy file (check mode)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/file'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /file
   check_mode: true
   diff: false
   register: result_1
 
 - name: Copy file (check mode, diff)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/file'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /file
   check_mode: true
   diff: true
   register: result_1_diff
 
 - name: Copy file (check mode)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/file'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /file
   register: result_2
 
 - name: Copy file (idempotent, check mode)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/file'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /file
   check_mode: true
   diff: false
   register: result_3
 
 - name: Copy file (idempotent, check mode, diff)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/file'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /file
   check_mode: true
   diff: true
   register: result_3_diff
 
 - name: Copy file (idempotent)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/file'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /file
   register: result_4
 
 - name: Dump file
   docker_container_exec:
-    container: '{{ cname }}'
+    container: "{{ cname }}"
     argv:
       - /bin/sh
-      - "-c"
+      - -c
       - >-
         cat /file | base64;
         stat -c '%s %a %F %u %g %N' /file > /dev/stderr
@@ -130,9 +130,9 @@
 
 - name: Copy file (force, check mode)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/file'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /file
     force: true
   check_mode: true
   diff: false
@@ -140,9 +140,9 @@
 
 - name: Copy file (force, check mode, diff)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/file'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /file
     force: true
   check_mode: true
   diff: true
@@ -150,18 +150,18 @@
 
 - name: Copy file (force)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/file'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /file
     force: true
   register: result_7
 
 - name: Dump file
   docker_container_exec:
-    container: '{{ cname }}'
+    container: "{{ cname }}"
     argv:
       - /bin/sh
-      - "-c"
+      - -c
       - >-
         cat /file | base64;
         stat -c '%s %a %F %u %g %N' /file > /dev/stderr
@@ -170,10 +170,10 @@
 
 - name: Copy file (force=false, check mode)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_2'
-    container_path: '/file'
-    mode: 0777
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_2"
+    container_path: /file
+    mode: "0777"
     owner_id: 123
     group_id: 321
     force: false
@@ -183,10 +183,10 @@
 
 - name: Copy file (force=false, check mode, diff)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_2'
-    container_path: '/file'
-    mode: 0777
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_2"
+    container_path: /file
+    mode: "0777"
     owner_id: 123
     group_id: 321
     force: false
@@ -196,10 +196,10 @@
 
 - name: Copy file (force=false)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_2'
-    container_path: '/file'
-    mode: 0777
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_2"
+    container_path: /file
+    mode: "0777"
     owner_id: 123
     group_id: 321
     force: false
@@ -207,10 +207,10 @@
 
 - name: Dump file
   docker_container_exec:
-    container: '{{ cname }}'
+    container: "{{ cname }}"
     argv:
       - /bin/sh
-      - "-c"
+      - -c
       - >-
         cat /file | base64;
         stat -c '%s %a %F %u %g %N' /file > /dev/stderr
@@ -252,8 +252,8 @@
       - "'diff' not in result_9"
       - result_9_diff.diff.before == 'Content 1\n'
       - result_9_diff.diff.before_header == '/file'
-      - result_9_diff.diff.after == 'Content 1\n'  # note that force=false
-      - result_9_diff.diff.after_header == '/file'  # note that force=false
+      - result_9_diff.diff.after == 'Content 1\n' # note that force=false
+      - result_9_diff.diff.after_header == '/file' # note that force=false
       - result_9 == (result_9_diff | dict2items | rejectattr('key', 'eq', 'diff') | items2dict)
       - result_10 is not changed
       - result_11.stdout | b64decode == 'Content 1\n'
@@ -263,10 +263,10 @@
 
 - name: Dump file
   docker_container_exec:
-    container: '{{ cname }}'
+    container: "{{ cname }}"
     argv:
       - /bin/sh
-      - "-c"
+      - -c
       - >-
         cat /lnk | base64;
         stat -c '%s %a %F %u %g %N' /lnk > /dev/stderr;
@@ -275,9 +275,9 @@
 
 - name: Copy file following link (check mode)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/lnk'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /lnk
     follow: true
   check_mode: true
   diff: false
@@ -285,9 +285,9 @@
 
 - name: Copy file following link (check mode, diff)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/lnk'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /lnk
     follow: true
   check_mode: true
   diff: true
@@ -295,18 +295,18 @@
 
 - name: Copy file following link
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/lnk'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /lnk
     follow: true
   register: result_2
 
 - name: Dump file
   docker_container_exec:
-    container: '{{ cname }}'
+    container: "{{ cname }}"
     argv:
       - /bin/sh
-      - "-c"
+      - -c
       - >-
         cat /lnk | base64;
         stat -c '%s %a %F %u %g %N' /lnk > /dev/stderr;
@@ -316,9 +316,9 @@
 
 - name: Copy file following link (force, check mode)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/lnk'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /lnk
     follow: true
     force: true
   check_mode: true
@@ -327,9 +327,9 @@
 
 - name: Copy file following link (force, check mode, diff)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/lnk'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /lnk
     follow: true
     force: true
   check_mode: true
@@ -338,19 +338,19 @@
 
 - name: Copy file following link (force)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/lnk'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /lnk
     follow: true
     force: true
   register: result_5
 
 - name: Dump file
   docker_container_exec:
-    container: '{{ cname }}'
+    container: "{{ cname }}"
     argv:
       - /bin/sh
-      - "-c"
+      - -c
       - >-
         cat /lnk | base64;
         stat -c '%s %a %F %u %g %N' /lnk > /dev/stderr;
@@ -394,9 +394,9 @@
 
 - name: Copy file not following link (check mode)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/lnk'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /lnk
     follow: false
   check_mode: true
   diff: false
@@ -404,9 +404,9 @@
 
 - name: Copy file not following link (check mode, diff)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/lnk'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /lnk
     follow: false
   check_mode: true
   diff: true
@@ -414,43 +414,43 @@
 
 - name: Copy file not following link
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/lnk'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /lnk
     follow: false
   register: result_2
 
 - name: Copy file not following link (idempotent, check mode)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/lnk'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /lnk
   check_mode: true
   diff: false
   register: result_3
 
 - name: Copy file not following link (idempotent, check mode, diff)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/lnk'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /lnk
   check_mode: true
   diff: true
   register: result_3_diff
 
 - name: Copy file not following link (idempotent)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/lnk'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /lnk
   register: result_4
 
 - name: Dump file
   docker_container_exec:
-    container: '{{ cname }}'
+    container: "{{ cname }}"
     argv:
       - /bin/sh
-      - "-c"
+      - -c
       - >-
         cat /lnk | base64;
         stat -c '%s %a %F %u %g %N' /lnk > /dev/stderr
@@ -459,9 +459,9 @@
 
 - name: Copy file not following link (force, check mode)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/lnk'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /lnk
     force: true
   check_mode: true
   diff: false
@@ -469,9 +469,9 @@
 
 - name: Copy file not following link (force, check mode, diff)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/lnk'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /lnk
     force: true
   check_mode: true
   diff: true
@@ -479,18 +479,18 @@
 
 - name: Copy file not following link (force)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/lnk'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /lnk
     force: true
   register: result_7
 
 - name: Dump file
   docker_container_exec:
-    container: '{{ cname }}'
+    container: "{{ cname }}"
     argv:
       - /bin/sh
-      - "-c"
+      - -c
       - >-
         cat /lnk | base64;
         stat -c '%s %a %F %u %g %N' /lnk > /dev/stderr
@@ -537,9 +537,9 @@
 
 - name: Copy file to replace directory (check mode)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/dir'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /dir
     follow: false
   check_mode: true
   diff: false
@@ -547,9 +547,9 @@
 
 - name: Copy file to replace directory (check mode, diff)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/dir'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /dir
     follow: false
   check_mode: true
   diff: true
@@ -557,43 +557,43 @@
 
 - name: Copy file to replace directory (check mode)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/dir'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /dir
     follow: false
   register: result_2
 
 - name: Copy file to replace directory (idempotent, check mode)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/dir'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /dir
   check_mode: true
   diff: false
   register: result_3
 
 - name: Copy file to replace directory (idempotent, check mode, diff)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/dir'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /dir
   check_mode: true
   diff: true
   register: result_3_diff
 
 - name: Copy file to replace directory (idempotent)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/dir'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /dir
   register: result_4
 
 - name: Dump file
   docker_container_exec:
-    container: '{{ cname }}'
+    container: "{{ cname }}"
     argv:
       - /bin/sh
-      - "-c"
+      - -c
       - >-
         cat /dir | base64;
         stat -c '%s %a %F %u %g %N' /dir > /dev/stderr
@@ -628,35 +628,35 @@
 
 - name: Copy file (changed, check mode)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_2'
-    container_path: '/file'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_2"
+    container_path: /file
   check_mode: true
   diff: false
   register: result_1
 
 - name: Copy file (changed, check mode, diff)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_2'
-    container_path: '/file'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_2"
+    container_path: /file
   check_mode: true
   diff: true
   register: result_1_diff
 
 - name: Copy file (changed)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_2'
-    container_path: '/file'
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_2"
+    container_path: /file
   register: result_2
 
 - name: Dump file
   docker_container_exec:
-    container: '{{ cname }}'
+    container: "{{ cname }}"
     argv:
       - /bin/sh
-      - "-c"
+      - -c
       - >-
         cat /file | base64;
         stat -c '%s %a %F %u %g %N' /file > /dev/stderr
@@ -681,66 +681,66 @@
 
 - name: Copy file (mode changed, check mode)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_2'
-    container_path: '/file'
-    mode: 0707
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_2"
+    container_path: /file
+    mode: "0707"
   check_mode: true
   diff: false
   register: result_1
 
 - name: Copy file (mode changed, check mode, diff)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_2'
-    container_path: '/file'
-    mode: 0707
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_2"
+    container_path: /file
+    mode: "0707"
   check_mode: true
   diff: true
   register: result_1_diff
 
 - name: Copy file (mode changed)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_2'
-    container_path: '/file'
-    mode: 0707
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_2"
+    container_path: /file
+    mode: "0707"
   register: result_2
 
 - name: Copy file (idempotent, check mode)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_2'
-    container_path: '/file'
-    mode: 0707
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_2"
+    container_path: /file
+    mode: "0707"
   check_mode: true
   diff: false
   register: result_3
 
 - name: Copy file (idempotent, check mode, diff)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_2'
-    container_path: '/file'
-    mode: 0707
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_2"
+    container_path: /file
+    mode: "0707"
   check_mode: true
   diff: true
   register: result_3_diff
 
 - name: Copy file (idempotent)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_2'
-    container_path: '/file'
-    mode: 0707
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_2"
+    container_path: /file
+    mode: "0707"
   register: result_4
 
 - name: Dump file
   docker_container_exec:
-    container: '{{ cname }}'
+    container: "{{ cname }}"
     argv:
       - /bin/sh
-      - "-c"
+      - -c
       - >-
         cat /file | base64;
         stat -c '%s %a %F %u %g %N' /file > /dev/stderr
@@ -773,10 +773,10 @@
 
 - name: Copy file (owner/group changed, check mode)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_2'
-    container_path: '/file'
-    mode: 0707
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_2"
+    container_path: /file
+    mode: "0707"
     owner_id: 12
     group_id: 910
   check_mode: true
@@ -785,10 +785,10 @@
 
 - name: Copy file (owner/group changed, check mode, diff)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_2'
-    container_path: '/file'
-    mode: 0707
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_2"
+    container_path: /file
+    mode: "0707"
     owner_id: 12
     group_id: 910
   check_mode: true
@@ -797,20 +797,20 @@
 
 - name: Copy file (owner/group changed)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_2'
-    container_path: '/file'
-    mode: 0707
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_2"
+    container_path: /file
+    mode: "0707"
     owner_id: 12
     group_id: 910
   register: result_2
 
 - name: Copy file (idempotent, check mode)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_2'
-    container_path: '/file'
-    mode: 0707
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_2"
+    container_path: /file
+    mode: "0707"
     owner_id: 12
     group_id: 910
   check_mode: true
@@ -819,10 +819,10 @@
 
 - name: Copy file (idempotent, check mode, diff)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_2'
-    container_path: '/file'
-    mode: 0707
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_2"
+    container_path: /file
+    mode: "0707"
     owner_id: 12
     group_id: 910
   check_mode: true
@@ -831,20 +831,20 @@
 
 - name: Copy file (idempotent)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_2'
-    container_path: '/file'
-    mode: 0707
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_2"
+    container_path: /file
+    mode: "0707"
     owner_id: 12
     group_id: 910
   register: result_4
 
 - name: Dump file
   docker_container_exec:
-    container: '{{ cname }}'
+    container: "{{ cname }}"
     argv:
       - /bin/sh
-      - "-c"
+      - -c
       - >-
         cat /file | base64;
         stat -c '%s %a %F %u %g %N' /file > /dev/stderr
@@ -853,10 +853,10 @@
 
 - name: Copy file (owner/group changed again, check mode)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_2'
-    container_path: '/file'
-    mode: 0707
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_2"
+    container_path: /file
+    mode: "0707"
     owner_id: 13
     group_id: 13
   check_mode: true
@@ -865,10 +865,10 @@
 
 - name: Copy file (owner/group changed again, check mode, diff)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_2'
-    container_path: '/file'
-    mode: 0707
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_2"
+    container_path: /file
+    mode: "0707"
     owner_id: 13
     group_id: 13
   check_mode: true
@@ -877,20 +877,20 @@
 
 - name: Copy file (owner/group changed again)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_2'
-    container_path: '/file'
-    mode: 0707
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_2"
+    container_path: /file
+    mode: "0707"
     owner_id: 13
     group_id: 13
   register: result_7
 
 - name: Dump file
   docker_container_exec:
-    container: '{{ cname }}'
+    container: "{{ cname }}"
     argv:
       - /bin/sh
-      - "-c"
+      - -c
       - >-
         cat /file | base64;
         stat -c '%s %a %F %u %g %N' /file > /dev/stderr
@@ -939,10 +939,10 @@
 
 - name: Copy file (stopped container, check mode)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/file'
-    mode: 0707
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /file
+    mode: "0707"
     owner_id: 12
     group_id: 910
   check_mode: true
@@ -951,10 +951,10 @@
 
 - name: Copy file (stopped container, check mode, diff)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/file'
-    mode: 0707
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /file
+    mode: "0707"
     owner_id: 12
     group_id: 910
   check_mode: true
@@ -963,20 +963,20 @@
 
 - name: Copy file (stopped container)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/file'
-    mode: 0707
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /file
+    mode: "0707"
     owner_id: 12
     group_id: 910
   register: result_2
 
 - name: Copy file (stopped container, idempotent, check mode)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/file'
-    mode: 0707
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /file
+    mode: "0707"
     owner_id: 12
     group_id: 910
   check_mode: true
@@ -985,10 +985,10 @@
 
 - name: Copy file (stopped container, idempotent, check mode, diff)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/file'
-    mode: 0707
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /file
+    mode: "0707"
     owner_id: 12
     group_id: 910
   check_mode: true
@@ -997,20 +997,20 @@
 
 - name: Copy file (stopped container, idempotent)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/file'
-    mode: 0707
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /file
+    mode: "0707"
     owner_id: 12
     group_id: 910
   register: result_4
 
 - name: Copy file (stopped container, no owner/group provided, should fail)
   docker_container_copy_into:
-    container: '{{ cname }}'
-    path: '{{ remote_tmp_dir }}/file_1'
-    container_path: '/file'
-    mode: 0707
+    container: "{{ cname }}"
+    path: "{{ remote_tmp_dir }}/file_1"
+    container_path: /file
+    mode: "0707"
   register: result_5
   ignore_errors: true
 
@@ -1021,10 +1021,10 @@
 
 - name: Dump file
   docker_container_exec:
-    container: '{{ cname }}'
+    container: "{{ cname }}"
     argv:
       - /bin/sh
-      - "-c"
+      - -c
       - >-
         cat /file | base64;
         stat -c '%s %a %F %u %g %N' /file > /dev/stderr

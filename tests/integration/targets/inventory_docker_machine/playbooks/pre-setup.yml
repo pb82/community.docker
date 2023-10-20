@@ -15,7 +15,8 @@
       vars:
         docker_machine_version: "0.16.1"
       get_url:
-        url: "https://github.com/docker/machine/releases/download/v{{ docker_machine_version }}/docker-machine-{{ ansible_system }}-{{ ansible_userspace_architecture }}"
+        url: https://github.com/docker/machine/releases/download/v{{ docker_machine_version }}/docker-machine-{{ ansible_system }}-{{ ansible_userspace_architecture
+          }}
         dest: /tmp/docker-machine
     - name: Install docker-machine binary
       command: install /tmp/docker-machine /usr/bin/docker-machine

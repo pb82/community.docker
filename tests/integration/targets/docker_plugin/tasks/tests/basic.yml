@@ -126,22 +126,22 @@
 
 - assert:
     that:
-    - create_1_check is changed
-    - create_1 is changed
-    - create_2_check is not changed
-    - create_2 is not changed
-    - create_3_check is changed
-    - create_3 is changed
-    - create_4_check is not changed
-    - create_4 is not changed
-    - absent_1_check is changed
-    - absent_1 is changed
-    - absent_2_check is not changed
-    - absent_2 is not changed
-    - absent_3_check is changed
-    - absent_3 is changed
-    - absent_4_check is not changed
-    - absent_4 is not changed
+      - create_1_check is changed
+      - create_1 is changed
+      - create_2_check is not changed
+      - create_2 is not changed
+      - create_3_check is changed
+      - create_3 is changed
+      - create_4_check is not changed
+      - create_4 is not changed
+      - absent_1_check is changed
+      - absent_1 is changed
+      - absent_2_check is not changed
+      - absent_2 is not changed
+      - absent_3_check is changed
+      - absent_3 is changed
+      - absent_4_check is not changed
+      - absent_4 is not changed
 
 ############ Plugin_Options ############
 ########################################
@@ -150,7 +150,7 @@
   docker_plugin:
     plugin_name: "{{ plugin_name }}"
     plugin_options:
-      DEBUG: '1'
+      DEBUG: "1"
     state: present
   register: create_1
 
@@ -158,7 +158,7 @@
   docker_plugin:
     plugin_name: "{{ plugin_name }}"
     plugin_options:
-      DEBUG: '1'
+      DEBUG: "1"
     state: present
   register: create_2
 
@@ -166,7 +166,7 @@
   docker_plugin:
     plugin_name: "{{ plugin_name }}"
     plugin_options:
-      DEBUG: '0'
+      DEBUG: "0"
     state: present
   register: update_1
 
@@ -174,7 +174,7 @@
   docker_plugin:
     plugin_name: "{{ plugin_name }}"
     plugin_options:
-      DEBUG: '0'
+      DEBUG: "0"
     state: present
   register: update_2
 
@@ -186,7 +186,7 @@
 
 - assert:
     that:
-    - create_1 is changed
-    - create_2 is not changed
-    - update_1 is changed
-    - update_2 is not changed
+      - create_1 is changed
+      - create_2 is not changed
+      - update_1 is changed
+      - update_2 is not changed

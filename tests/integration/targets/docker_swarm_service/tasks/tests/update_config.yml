@@ -20,7 +20,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     update_config:
       delay: 5s
   register: update_delay_1
@@ -30,7 +30,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     update_config:
       delay: 5s
   register: update_delay_2
@@ -40,7 +40,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     update_config:
       delay: 12s
   register: update_delay_3
@@ -66,9 +66,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     update_config:
-      failure_action: "pause"
+      failure_action: pause
   register: update_failure_action_1
 
 - name: update_config.failure_action (idempotency)
@@ -76,9 +76,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     update_config:
-      failure_action: "pause"
+      failure_action: pause
   register: update_failure_action_2
 
 - name: update_config.failure_action (change)
@@ -86,9 +86,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     update_config:
-      failure_action: "continue"
+      failure_action: continue
   register: update_failure_action_3
 
 - name: update_config.failure_action (rollback)
@@ -96,9 +96,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     update_config:
-      failure_action: "rollback"
+      failure_action: rollback
   register: update_failure_action_4
   ignore_errors: true
 
@@ -107,9 +107,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     update_config:
-      failure_action: "rollback"
+      failure_action: rollback
   register: update_failure_action_5
   ignore_errors: true
 
@@ -147,9 +147,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     update_config:
-      max_failure_ratio: 0.25
+      max_failure_ratio: !!float "0.25"
   register: update_max_failure_ratio_1
   ignore_errors: true
 
@@ -158,9 +158,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     update_config:
-      max_failure_ratio: 0.25
+      max_failure_ratio: !!float "0.25"
   register: update_max_failure_ratio_2
   ignore_errors: true
 
@@ -169,9 +169,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     update_config:
-      max_failure_ratio: 0.50
+      max_failure_ratio: !!float "0.50"
   register: update_max_failure_ratio_3
   ignore_errors: true
 
@@ -189,8 +189,8 @@
   when: docker_py_version is version('2.1.0', '>=')
 - assert:
     that:
-    - update_max_failure_ratio_1 is failed
-    - "'Minimum version required' in update_max_failure_ratio_1.msg"
+      - update_max_failure_ratio_1 is failed
+      - "'Minimum version required' in update_max_failure_ratio_1.msg"
   when: docker_py_version is version('2.1.0', '<')
 
 ###################################################################
@@ -202,7 +202,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     update_config:
       monitor: 10s
   register: update_monitor_1
@@ -213,7 +213,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     update_config:
       monitor: 10s
   register: update_monitor_2
@@ -224,7 +224,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     update_config:
       monitor: 60s
   register: update_monitor_3
@@ -244,8 +244,8 @@
   when: docker_py_version is version('2.1.0', '>=')
 - assert:
     that:
-    - update_monitor_1 is failed
-    - "'Minimum version required' in update_monitor_1.msg"
+      - update_monitor_1 is failed
+      - "'Minimum version required' in update_monitor_1.msg"
   when: docker_py_version is version('2.1.0', '<')
 
 ###################################################################
@@ -257,9 +257,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     update_config:
-      order: "start-first"
+      order: start-first
   register: update_order_1
   ignore_errors: true
 
@@ -268,9 +268,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     update_config:
-      order: "start-first"
+      order: start-first
   register: update_order_2
   ignore_errors: true
 
@@ -279,9 +279,9 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     update_config:
-      order: "stop-first"
+      order: stop-first
   register: update_order_3
   ignore_errors: true
 
@@ -299,8 +299,8 @@
   when: docker_api_version is version('1.29', '>=') and docker_py_version is version('2.7.0', '>=')
 - assert:
     that:
-    - update_order_1 is failed
-    - "'Minimum version required' in update_order_1.msg"
+      - update_order_1 is failed
+      - "'Minimum version required' in update_order_1.msg"
   when: docker_api_version is version('1.29', '<') or docker_py_version is version('2.7.0', '<')
 
 ###################################################################
@@ -312,7 +312,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     update_config:
       parallelism: 2
   register: update_parallelism_1
@@ -322,7 +322,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     update_config:
       parallelism: 2
   register: update_parallelism_2
@@ -332,7 +332,7 @@
     name: "{{ service_name }}"
     image: "{{ docker_test_image_alpine }}"
     resolve_image: false
-    command: '/bin/sh -v -c "sleep 10m"'
+    command: /bin/sh -v -c "sleep 10m"
     update_config:
       parallelism: 1
   register: update_parallelism_3

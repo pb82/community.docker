@@ -18,33 +18,33 @@
 - name: published_ports -- non-closing square bracket
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     published_ports:
-    - "[::1:2000:3000"
+      - "[::1:2000:3000"
   register: published_ports_1
   ignore_errors: true
 
 - name: published_ports -- forgot square brackets for IPv6
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     published_ports:
-    - "::1:2000:3000"
+      - ::1:2000:3000
   register: published_ports_2
   ignore_errors: true
 
 - name: published_ports -- disallow hostnames
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     published_ports:
-    - "foo:2000:3000"
+      - foo:2000:3000
   register: published_ports_3
   ignore_errors: true
 
@@ -53,9 +53,11 @@
       - published_ports_1 is failed
       - published_ports_1.msg == 'Cannot find closing "]" in input "[::1:2000:3000" for opening "[" at index 1!'
       - published_ports_2 is failed
-      - published_ports_2.msg == 'Invalid port description "::1:2000:3000" - expected 1 to 3 colon-separated parts, but got 5. Maybe you forgot to use square brackets ([...]) around an IPv6 address?'
+      - published_ports_2.msg == 'Invalid port description "::1:2000:3000" - expected 1 to 3 colon-separated parts, but got 5. Maybe you forgot to use square brackets
+        ([...]) around an IPv6 address?'
       - published_ports_3 is failed
-      - "published_ports_3.msg == 'Bind addresses for published ports must be IPv4 or IPv6 addresses, not hostnames. Use the dig lookup to resolve hostnames. (Found hostname: foo)'"
+      - "published_ports_3.msg == 'Bind addresses for published ports must be IPv4 or IPv6 addresses, not hostnames. Use the dig lookup to resolve hostnames. (Found
+        hostname: foo)'"
 
 ####################################################################
 ## published_ports: port range #####################################
@@ -64,45 +66,45 @@
 - name: published_ports -- port range
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     exposed_ports:
-    - "9001"
-    - "9010-9050"
+      - "9001"
+      - 9010-9050
     published_ports:
-    - "9001:9001"
-    - "9010-9050:9010-9050"
+      - 9001:9001
+      - 9010-9050:9010-9050
     force_kill: true
   register: published_ports_1
 
 - name: published_ports -- port range (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     exposed_ports:
-    - "9001"
-    - "9010-9050"
+      - "9001"
+      - 9010-9050
     published_ports:
-    - "9001:9001"
-    - "9010-9050:9010-9050"
+      - 9001:9001
+      - 9010-9050:9010-9050
     force_kill: true
   register: published_ports_2
 
 - name: published_ports -- port range (different range)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     exposed_ports:
-    - "9001"
-    - "9010-9050"
+      - "9001"
+      - 9010-9050
     published_ports:
-    - "9001:9001"
-    - "9020-9060:9020-9060"
+      - 9001:9001
+      - 9020-9060:9020-9060
     force_kill: true
   register: published_ports_3
 
@@ -115,9 +117,9 @@
 
 - assert:
     that:
-    - published_ports_1 is changed
-    - published_ports_2 is not changed
-    - published_ports_3 is changed
+      - published_ports_1 is changed
+      - published_ports_2 is not changed
+      - published_ports_3 is changed
 
 ####################################################################
 ## published_ports: one-element container port range ###############
@@ -126,43 +128,43 @@
 - name: published_ports -- one-element container port range
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ item }}"
     state: started
     published_ports:
-    - "9010-9050:9010"
+      - 9010-9050:9010
     force_kill: true
   loop:
-    - '{{ cname }}'
-    - '{{ cname2 }}'
+    - "{{ cname }}"
+    - "{{ cname2 }}"
   register: published_ports_1
 
 - name: published_ports -- one-element container port range (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ item }}"
     state: started
     published_ports:
-    - "9010-9050:9010"
+      - 9010-9050:9010
     force_kill: true
   loop:
-    - '{{ cname }}'
-    - '{{ cname2 }}'
+    - "{{ cname }}"
+    - "{{ cname2 }}"
   register: published_ports_2
 
 - name: published_ports -- one-element container port range (different range)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ item }}"
     state: started
     published_ports:
-    - "9010-9051:9010"
+      - 9010-9051:9010
     force_kill: true
   loop:
-    - '{{ cname }}'
-    - '{{ cname2 }}'
+    - "{{ cname }}"
+    - "{{ cname2 }}"
   register: published_ports_3
 
 - name: cleanup
@@ -171,15 +173,15 @@
     state: absent
     force_kill: true
   loop:
-    - '{{ cname }}'
-    - '{{ cname2 }}'
+    - "{{ cname }}"
+    - "{{ cname2 }}"
   diff: false
 
 - assert:
     that:
-    - published_ports_1 is changed
-    - published_ports_2 is not changed
-    - published_ports_3 is changed
+      - published_ports_1 is changed
+      - published_ports_2 is not changed
+      - published_ports_3 is changed
 
 ####################################################################
 ## published_ports: IPv6 addresses #################################
@@ -188,44 +190,44 @@
 - name: published_ports -- IPv6
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     published_ports:
-    - "[::1]:9001:9001"
+      - "[::1]:9001:9001"
     force_kill: true
   register: published_ports_1
 
 - name: published_ports -- IPv6 (idempotency)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     published_ports:
-    - "[::1]:9001:9001"
+      - "[::1]:9001:9001"
     force_kill: true
   register: published_ports_2
 
 - name: published_ports -- IPv6 (different IP)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     published_ports:
-    - "127.0.0.1:9001:9001"
+      - 127.0.0.1:9001:9001
     force_kill: true
   register: published_ports_3
 
 - name: published_ports -- IPv6 (hostname)
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     published_ports:
-    - "localhost:9001:9001"
+      - localhost:9001:9001
     force_kill: true
   register: published_ports_4
   ignore_errors: true
@@ -239,10 +241,10 @@
 
 - assert:
     that:
-    - published_ports_1 is changed
-    - published_ports_2 is not changed
-    - published_ports_3 is changed
-    - published_ports_4 is failed
+      - published_ports_1 is changed
+      - published_ports_2 is not changed
+      - published_ports_3 is changed
+      - published_ports_4 is failed
 
 ####################################################################
 ## publish_all_ports ###############################################
@@ -273,8 +275,8 @@
         changed: false
       - test_name: null_with_published_ports
         published_ports_value: &ports
-          - "9001:9001"
-          - "9010-9050:9010-9050"
+          - 9001:9001
+          - 9010-9050:9010-9050
         changed: true
       - test_name: null_to_true_with_published_ports
         publish_all_ports_value: true
@@ -306,7 +308,7 @@
 - name: publish_all_ports ({{ test_case.test_name }})
   docker_container:
     image: "{{ docker_test_image_alpine }}"
-    command: '/bin/sh -c "sleep 10m"'
+    command: /bin/sh -c "sleep 10m"
     name: "{{ cname }}"
     state: started
     publish_all_ports: "{{ test_case.publish_all_ports_value | default(omit) }}"

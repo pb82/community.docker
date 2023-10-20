@@ -80,12 +80,12 @@
 
 - assert:
     that:
-    - present_1 is changed
-    - present_2 is changed
-    - present_3 is not changed
-    - present_4 is not changed
-    - present_5 is changed
-    - present_6 is changed
+      - present_1 is changed
+      - present_2 is changed
+      - present_3 is not changed
+      - present_4 is not changed
+      - present_5 is changed
+      - present_6 is changed
 
 ####################################################################
 ## Absent ##########################################################
@@ -123,10 +123,10 @@
 
 - assert:
     that:
-    - absent_1 is changed
-    - absent_2 is changed
-    - absent_3 is not changed
-    - absent_4 is not changed
+      - absent_1 is changed
+      - absent_2 is changed
+      - absent_3 is not changed
+      - absent_4 is not changed
 
 ####################################################################
 ## Stopping and starting ###########################################
@@ -221,13 +221,13 @@
 
 - assert:
     that:
-    - present_1 is changed
-    - present_2 is changed
-    - present_3 is not changed
-    - present_4 is not changed
-    - started_1 is changed
-    - started_2 is changed
-    - started_3 is not changed
-    - started_4 is not changed
-    - stopped_1 is changed
-    - stopped_2 is changed
+      - present_1 is changed
+      - present_2 is changed
+      - present_3 is not changed
+      - present_4 is not changed
+      - started_1 is changed
+      - started_2 is changed
+      - started_3 is not changed
+      - started_4 is not changed
+      - stopped_1 is changed
+      - stopped_2 is changed
